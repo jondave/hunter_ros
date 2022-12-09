@@ -1,0 +1,11 @@
+<launch>
+    <rosparam command="load" file="$(find husky_control)/config/teleop_logitech.yaml" />
+    <param name="joy_node/dev" value="/dev/input/js0" />
+    
+    
+    <node pkg="joy" type="joy_node" name="joy_node" />
+
+    <node pkg="teleop_twist_joy" type="teleop_node" name="teleop_twist_joy">        
+        <param name="axis_angular" value="3" />
+    </node>
+  </launch>

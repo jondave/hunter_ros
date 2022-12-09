@@ -5,4 +5,17 @@
         <arg name="simulated_robot" default="false" />
         <arg name="publish_tf" default="true" />
     </include>
+
+    <!-- launch joy teleop -->
+    <include file="$(find hunter_bringup)/launch/hunter_joy_teleop.launch" />
+
+    <!-- launch imu -->
+    <include file="$(find hunter_bringup)/launch/imu/phidgets_spatial_333_imu.launch" />
+
+    <!-- launch gps -->
+    <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" />
+
+    <!-- launch RTK data stream -->
+    <!-- needs neotic / python3 rtk packages -->
+    <!--<include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />-->
 </launch>
