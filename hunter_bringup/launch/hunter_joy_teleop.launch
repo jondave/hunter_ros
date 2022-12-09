@@ -1,11 +1,16 @@
 <launch>
-    <rosparam command="load" file="$(find husky_control)/config/teleop_logitech.yaml" />
+    <rosparam command="load" file="$(find hunter_bringup)/config/teleop_logitech.yaml" />
     <param name="joy_node/dev" value="/dev/input/js0" />
     
     
     <node pkg="joy" type="joy_node" name="joy_node" />
 
-    <node pkg="teleop_twist_joy" type="teleop_node" name="teleop_twist_joy">        
-        <param name="axis_angular" value="3" />
+    <node pkg="teleop_twist_joy" type="teleop_node" name="teleop_twist_joy">
+        <remap from="cmd_vel" to="joy_teleop/cmd_vel" />
+    </node>
+
+    <node pkg="twist_mux" type="twist_mux" name="twist_mux">
+        <rosparam command="load" file="$(find hunter_bringup)/config/twist_mux.yaml" />
+        <remap from="cmd_vel_out" to="cmd_vel"/>
     </node>
   </launch>

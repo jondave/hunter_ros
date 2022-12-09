@@ -23,6 +23,7 @@
 
     # optional param frame_id, default is "imu_link"
     <!-- <param name="frame_id" value="imu_link"/> -->
+    <param name="frame_id" value="base_link"/>
 
     # optional param linear_acceleration_stdev, default is 280ug
     <!-- <param name="linear_acceleration_stdev" value="0.002745862"/> -->
