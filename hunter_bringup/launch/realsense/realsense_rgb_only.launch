@@ -1,13 +1,13 @@
 <launch>
-  <arg name="serial_no"           default="$(optenv HUSKY_REALSENSE_SERIAL 050222071152)"/> <!-- 141722073232 --> <!-- 112322070028 -->
+  <arg name="serial_no"           default=""/> <!-- 141722073232 --> <!-- 112322070028 -->
   <arg name="usb_port_id"         default=""/>
   <arg name="device_type"         default=""/>
   <arg name="json_file_path"      default=""/>
-  <arg name="camera"              default="$(optenv HUSKY_REALSENSE_TOPIC realsense)"/>
+  <arg name="camera"              default="realsense"/>
   <arg name="tf_prefix"           default="$(arg camera)"/>
   <arg name="external_manager"    default="false"/>
   <arg name="manager"             default="realsense2_camera_manager"/>
-  <arg name="base_frame_id"       default="$(optenv HUSKY_REALSENSE_MOUNT_FRAME sensor_arch_mount_link)" />
+  <arg name="base_frame_id"       default="base_link" />
   <arg name="output"              default="screen"/>
   <arg name="respawn"             default="false"/>
 
