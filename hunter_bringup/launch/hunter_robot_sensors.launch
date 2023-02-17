@@ -11,10 +11,15 @@
     <!-- merge both zed2 laserscan topics to one scan topic -->
     <include file="$(find hunter_bringup)/launch/laserscan/lasers_merger.launch" />
 
-    <!-- launch gps -->
+    <!-- launch gps, nmea_navsat_driver and robot localisation navsat transform -->
     <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" />
 
     <!-- launch RTK data stream -->
     <include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />
+    
+    <!-- launch local ekf localisation -->
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
+        <rosparam command="load" file="$(find hunter_bringup)/config/ekf_local.yaml" />
+    </node>
     
 </launch>
