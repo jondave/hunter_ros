@@ -69,6 +69,7 @@
     output="screen">
 
     <param name="use_mag" value="true"/>
+    <param name="publish_tf" value="false"/>
   </node>
 
 </launch>

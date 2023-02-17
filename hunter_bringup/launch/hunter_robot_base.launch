@@ -3,8 +3,11 @@
     <include file="$(find hunter_base)/launch/hunter_base.launch">
         <arg name="port_name" default="can0" />
         <arg name="simulated_robot" default="false" />
-        <arg name="publish_tf" default="true" />
+        <arg name="publish_tf" default="false" />
     </include>
+    
+    <!-- launch robot model for rviz -->    
+    <include file="$(find hunter_bringup)/launch/display_xacro.launch" />
 
     <!-- launch joy teleop -->
     <include file="$(find hunter_bringup)/launch/hunter_joy_teleop.launch" />
@@ -12,15 +15,29 @@
     <!-- launch imu -->
     <include file="$(find hunter_bringup)/launch/imu/phidgets_spatial_333_imu.launch" />
 
+    <!-- launch both front and rear zed2 cameras -->
+    <include file="$(find hunter_bringup)/launch/zed_camera/zed_multi_cam_single_nodelet.launch" />
+
+    <!-- convert both zed2 pointclouds to laserscans  -->
+    <include file="$(find hunter_bringup)/launch/laserscan/pointclouid_to_laserscan.launch" />
+
+    <!-- merge both zed2 laserscan topics to one scan topic -->
+    <include file="$(find hunter_bringup)/launch/laserscan/lasers_merger.launch" />
+
     <!-- launch gps, nmea_navsat_driver and robot localisation navsat transform -->
-    <!--<include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" />-->
+    <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" />
 
     <!-- launch RTK data stream -->
-    <!-- needs neotic / python3 rtk packages -->
-    <!--<include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />-->
+    <include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />
     
     <!-- launch local ekf localisation -->
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
         <rosparam command="load" file="$(find hunter_bringup)/config/ekf_local.yaml" />
     </node>
+
+    <!-- launch global ekf localisation -->
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_global">
+        <rosparam command="load" file="$(find hunter_bringup)/config/ekf_global.yaml" />
+    </node>
+
 </launch>
