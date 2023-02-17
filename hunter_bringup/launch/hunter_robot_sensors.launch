@@ -1,0 +1,20 @@
+<launch>
+    <!-- launch imu -->
+    <include file="$(find hunter_bringup)/launch/imu/phidgets_spatial_333_imu.launch" />
+
+    <!-- launch both front and rear zed2 cameras -->
+    <include file="$(find hunter_bringup)/launch/zed_camera/zed_multi_cam_single_nodelet.launch" />
+
+    <!-- convert both zed2 pointclouds to laserscans  -->
+    <include file="$(find hunter_bringup)/launch/laserscan/pointclouid_to_laserscan.launch" />
+
+    <!-- merge both zed2 laserscan topics to one scan topic -->
+    <include file="$(find hunter_bringup)/launch/laserscan/lasers_merger.launch" />
+
+    <!-- launch gps -->
+    <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" />
+
+    <!-- launch RTK data stream -->
+    <include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />
+    
+</launch>

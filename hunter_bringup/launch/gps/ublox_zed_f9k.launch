@@ -4,7 +4,7 @@
   <arg name="param_file_name"     doc="name of param file, e.g. rover" 
                                   default="ublox_zed_f9k"/>
   <arg name="param_file_dir"      doc="directory to look for $(arg param_file_name).yaml"
-                                  default="$(find gofar_bringup)/config" />
+                                  default="$(find hunter_bringup)/config" />
 
   <arg name="node_name"           doc="name of this node"
                                   default="gps" />
