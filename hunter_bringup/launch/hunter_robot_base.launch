@@ -24,6 +24,11 @@
     <!-- merge both zed2 laserscan topics to one scan topic -->
     <include file="$(find hunter_bringup)/launch/laserscan/lasers_merger.launch" />
 
+    <!-- launch amcl laserscan localisation -->
+    <include file="$(find hunter_bringup)/launch/laserscan/amcl.launch">
+        <arg name="map_file" value="$(find gofar_navigation)/config/site_files/riseholme/polytunnel/map.yaml" />
+    </include>
+
     <!-- launch gps, nmea_navsat_driver and robot localisation navsat transform -->
     <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" />
 

@@ -33,14 +33,42 @@ odom1_differential: false
 odom1_queue_size: 10
 
 # if using laserscan amcl pose estimation 
-#pose0: /amcl_pose
-#pose0_config: [true, true, false, 
-#              false, false, true,
-#              false, false, false, 
-#              false, false, false,
-#              false, false, false]
-#pose0_differential: false
-#pose0_queue_size: 10
+pose0: /amcl_pose
+pose0_config: [true, true, false, 
+              false, false, true,
+              false, false, false, 
+              false, false, false,
+              false, false, false]
+pose0_differential: false
+pose0_queue_size: 10
+
+# zed cameras
+# https://github.com/stereolabs/zed-ros-wrapper/issues/603
+pose1: /zed_multi/zed2_front/zed_nodelet_front/pose_with_covariance
+pose1_config: [true,  true,  false,
+               false, false, false,
+               false, false, false,
+               false, false, false,
+               false, false, false]
+pose1_differential: true
+pose1_relative: false
+pose1_queue_size: 5
+#pose1_rejection_threshold: 2  # Note the difference in parameter name
+pose1_nodelay: false
+
+pose2: /zed_multi/zed2_front/zed_nodelet_rear/pose_with_covariance
+pose2_config: [true,  true,  false,
+               false, false, false,
+               false, false, false,
+               false, false, false,
+               false, false, false]
+pose2_differential: true
+pose2_relative: false
+pose2_queue_size: 5
+#pose2_rejection_threshold: 2  # Note the difference in parameter name
+pose2_nodelay: false
+
+# zed cameras
 
 imu0: /imu/data
 imu0_config: [false, false, false,   # x_pos,    y_pos,     z_pos

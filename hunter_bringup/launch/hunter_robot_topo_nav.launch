@@ -1,0 +1,20 @@
+<launch>
+    
+    <!-- launch topological map -->    
+    <include file="$(find hunter_bringup)/launch/topological_navigation/topological_map_manager2_central.launch">
+        <arg name="tmap_file" default="$(find gofar_navigation)/config/site_files/riseholme/polytunnel/transportation/tmap.tmap2" />
+    </include>
+
+    <!-- launch topological navigation -->    
+    <!--include file="$(find hunter_bringup)/launch/topological_navigation/topological_navigation_robot.launch">
+        <arg name="move_base_planner" default="move_base/TebLocalPlannerROS" />
+        <arg name="reconfigure_edges" default="false" />
+        <arg name="use_restrictions" default="false" />
+        <arg name="use_han" default="false" />
+    </include>-->
+
+    <!-- launch move_base -->    
+    <include file="$(find hunter_bringup)/launch/topological_navigation/move_base_teb.launch">
+    </include>
+
+</launch>

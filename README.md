@@ -1,5 +1,8 @@
 # ROS Packages for Hunter Mobile Base
 
+## My Notes
+To start USB to CAN adapter run ```sudo ip link set can0 up type can bitrate 500000```.
+
 ## Packages
 
 * hunter_base: a ROS wrapper around Hunter SDK to monitor and control the robot
