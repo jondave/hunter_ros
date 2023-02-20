@@ -13,7 +13,7 @@
   <arg name="respawn_delay"       default="30" />
   <arg name="clear_params"        default="true" />  
  
-  <arg name="frame_id"            default="gps_link" />
+  <arg name="frame_id"            default="base_link" /> <!-- gps_link -->
 
   <node pkg="ublox_gps" type="ublox_gps" name="$(arg node_name)"
         output="$(arg output)"

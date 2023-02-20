@@ -16,3 +16,7 @@ topics:
   topic   : bearnav2/cmd_vel
   timeout : 0.5
   priority: 2
+- name    : move_base
+  topic   : move_base/cmd_vel
+  timeout : 0.5
+  priority: 3

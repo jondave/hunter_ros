@@ -33,14 +33,14 @@ odom1_config: [true,  true,  false,   # x_pos,    y_pos,     z_pos
 odom1_differential: false
 odom1_queue_size: 10
 
-odom2: /zed_multi/zed2_front/zed_nodelet_rear/odom
-odom2_config: [true,  true,  false,   # x_pos,    y_pos,     z_pos
-               false, false, false,   # roll,     pitch,     yaw
-               false, false, false,    # x_vel,    y_vel,     z_vel
-               false, false, false,    # roll_vel, pitch_vel, yaw_vel
-               false, false, false]   # x_accel,  y_accel,   z_accel
-odom2_differential: false
-odom2_queue_size: 10
+#odom2: /zed_multi/zed2_front/zed_nodelet_rear/odom
+#odom2_config: [true,  true,  false,   # x_pos,    y_pos,     z_pos
+#               false, false, false,   # roll,     pitch,     yaw
+#               false, false, false,    # x_vel,    y_vel,     z_vel
+#               false, false, false,    # roll_vel, pitch_vel, yaw_vel
+#               false, false, false]   # x_accel,  y_accel,   z_accel
+#odom2_differential: false
+#odom2_queue_size: 10
 # zed cameras
 
 imu0: /imu/data

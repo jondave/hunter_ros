@@ -6,7 +6,7 @@
     </include>
 
     <!-- launch topological navigation -->    
-    <!--include file="$(find hunter_bringup)/launch/topological_navigation/topological_navigation_robot.launch">
+    <!--<include file="$(find hunter_bringup)/launch/topological_navigation/topological_navigation_robot.launch">
         <arg name="move_base_planner" default="move_base/TebLocalPlannerROS" />
         <arg name="reconfigure_edges" default="false" />
         <arg name="use_restrictions" default="false" />
@@ -15,6 +15,7 @@
 
     <!-- launch move_base -->    
     <include file="$(find hunter_bringup)/launch/topological_navigation/move_base_teb.launch">
+        <arg name="cmd_vel_name" default="move_base/cmd_vel" />
     </include>
 
 </launch>
