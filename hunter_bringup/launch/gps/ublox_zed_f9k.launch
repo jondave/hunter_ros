@@ -30,7 +30,24 @@
     </node>
   </group>
 
+  <!-- converts gps cooridates to map cooridates and vice versa -->
   <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" >
+    <rosparam param="magnetic_declination_radians">0</rosparam>
+    <rosparam param="roll_offset">0</rosparam>
+    <rosparam param="pitch_offset">0</rosparam>
+    <rosparam param="yaw_offset">0</rosparam> <!-- 1.320708762053004 -->
+    <rosparam param="zero_altitude">true</rosparam>
+    <rosparam param="broadcast_utm_transform">false</rosparam>
+
+    <rosparam param="publish_filtered_gps">true</rosparam>
+
+    <!-- Subscriptions -->
+    <remap from="imu/data" to="imu/data" />
+    <remap from="gps/fix" to="gps/fix" />
+    <remap from="odometry/filtered" to="odometry/filtered/global" />
+   </node>  
+
+  <!--<node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" >
     <rosparam>
       magnetic_declination_radians: 0
       roll_offset: 0
@@ -39,5 +56,5 @@
       zero_altitude: false
       broadcast_utm_transform: false
     </rosparam>
-  </node>
+  </node>-->
 </launch>
