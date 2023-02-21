@@ -23,22 +23,22 @@ odom0_config: [false, false, false,   # x_pos,    y_pos,     z_pos
 odom0_differential: false
 odom0_queue_size: 10
 
-odom1: /odometry/gps # change to /odometry/gps for real robot
-odom1_config: [true,  true,  false,   # x_pos,    y_pos,     z_pos
-               false, false, false,   # roll,     pitch,     yaw
-               false, false, false,   # x_vel,    y_vel,     z_vel
-               false, false, false,   # roll_vel, pitch_vel, yaw_vel
-               false, false, false]   # x_accel,  y_accel,   z_accel
-odom1_differential: false
-odom1_queue_size: 10
+#odom1: /odometry/gps # change to /odometry/gps for real robot
+#odom1_config: [true,  true,  false,   # x_pos,    y_pos,     z_pos
+#               false, false, false,   # roll,     pitch,     yaw
+#               false, false, false,   # x_vel,    y_vel,     z_vel
+#               false, false, false,   # roll_vel, pitch_vel, yaw_vel
+#               false, false, false]   # x_accel,  y_accel,   z_accel
+#odom1_differential: false
+#odom1_queue_size: 10
 
 # zed cameras
 # https://github.com/stereolabs/zed-ros-wrapper/issues/603
 #odom2: /zed_multi/zed2_front/zed_nodelet_front/odom
 #odom2_config: [true,  true,  false,   # x_pos,    y_pos,     z_pos
 #               false, false, false,   # roll,     pitch,     yaw
-#               false, false, false,    # x_vel,    y_vel,     z_vel
-#               false, false, false,    # roll_vel, pitch_vel, yaw_vel
+#               false, false, false,   # x_vel,    y_vel,     z_vel
+#               false, false, false,   # roll_vel, pitch_vel, yaw_vel
 #               false, false, false]   # x_accel,  y_accel,   z_accel
 #odom2_differential: false
 #odom2_queue_size: 10
@@ -55,17 +55,17 @@ pose0_queue_size: 10
 
 # zed cameras
 # https://github.com/stereolabs/zed-ros-wrapper/issues/603
-pose1: /zed_multi/zed2_front/zed_nodelet_front/pose_with_covariance
-pose1_config: [true,  true,  false,
-               false, false, false,
-               false, false, false,
-               false, false, false,
-               false, false, false]
-pose1_differential: true
-pose1_relative: false
-pose1_queue_size: 5
-pose1_rejection_threshold: 2  # Note the difference in parameter name
-pose1_nodelay: false
+#pose1: /zed_multi/zed2_front/zed_nodelet_front/pose_with_covariance
+#pose1_config: [true,  true,  false,
+#               false, false, false,
+#               false, false, false,
+#               false, false, false,
+#               false, false, false]
+#pose1_differential: true
+#pose1_relative: false
+#pose1_queue_size: 5
+#pose1_rejection_threshold: 2  # Note the difference in parameter name
+#pose1_nodelay: false
 
 #pose2: /zed_multi/zed2_front/zed_nodelet_rear/pose_with_covariance
 #pose2_config: [true,  true,  false,
@@ -86,7 +86,7 @@ imu0_config: [false, false, false,   # x_pos,    y_pos,     z_pos
               true,  true,  true,    # roll,     pitch,     yaw
               false, false, false,   # x_vel,    y_vel,     z_vel
               true,  true,  true,    # roll_vel, pitch_vel, yaw_vel
-              true,  true,  true]   # x_accel,  y_accel,   z_acce
+              true,  true,  true]    # x_accel,  y_accel,   z_acce
 imu0_differential: true
 imu0_queue_size: 10
 imu0_remove_gravitational_acceleration: true
