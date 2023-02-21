@@ -35,13 +35,15 @@
     <!-- launch RTK data stream -->
     <include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />
     
-    <!-- launch local ekf localisation -->
+    <!-- launch local ekf localisation base_link to odom -->
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
         <rosparam command="load" file="$(find hunter_bringup)/config/ekf_local.yaml" />
     </node>
 
-    <!-- launch global ekf localisation -->
+    <!-- launch global ekf localisation odom to map -->
+    <!-- eg at http://docs.ros.org/en/noetic/api/robot_localization/html/integrating_gps.html -->
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_global">
+        <remap from="/odometry/filtered" to="/odometry/filtered/global" /> <!-- remap as both ekf nodes publish the same topic /odometry/filtered-->
         <rosparam command="load" file="$(find hunter_bringup)/config/ekf_global.yaml" />
     </node>
 
