@@ -70,8 +70,8 @@ init_cmd: |
 
   # Coordinator Riseholme
   export_default ROBOT_NAME "gofar_001"
-  export_default MQTT_BROKER_IP 10.10.0.1.ded
-  export_default MQTT_BROKER_PORT 8883
+  export_default MQTT_BROKER_IP 10.10.0.1
+  export_default MQTT_BROKER_PORT 8883  
   export_default AGENT_SETUP_CONFIG "$(rospack find gofar_navigation)/config/server_representation.yaml"
   
 windows:
@@ -93,15 +93,15 @@ windows:
   panes:
   - roslaunch hunter_bringup amcl.launch map_file:=$METRIC_MAP
 
-- name: agent_details
-  panes:
-  - rosrun gofar_navigation send_details_to_coordinator.py
-  tags: [mqtt]
-
 - name: mqtt_client
   panes:
   - roslaunch gofar_navigation mqtt_robot.launch
   check: "rostopic list | grep -q /topological_map_2"
+  tags: [mqtt]
+
+- name: agent_details
+  panes:
+  - roslaunch gofar_navigation send_details_to_coordinator.py
   tags: [mqtt]
 
 - name: topo_nav

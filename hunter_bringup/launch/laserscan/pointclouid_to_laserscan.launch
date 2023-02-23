@@ -1,6 +1,6 @@
 <launch>
   <!-- Include poincloud_to_laserscan if simulated realsense is attached -->
-  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="realsense_to_laserscan" output="screen">
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_front_to_laserscan" output="screen">
 
       <remap from="cloud_in" to="zed_multi/zed2_front/zed_nodelet_front/point_cloud/cloud_registered"/>
       <remap from="scan" to="zed2_front/scan"/>
@@ -28,7 +28,7 @@
   </node>
 
   <!-- added code for second realsesne camera depth image to laserscan -->
-  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="realsense_rear_to_laserscan" output="screen">
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_rear_to_laserscan" output="screen">
 
       <remap from="cloud_in" to="/zed_multi/zed2_rear/zed_nodelet_rear/point_cloud/cloud_registered"/>
       <remap from="scan" to="zed2_rear/scan"/>

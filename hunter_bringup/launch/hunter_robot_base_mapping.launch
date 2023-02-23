@@ -20,22 +20,18 @@
     <!-- launch imu -->
     <include file="$(find hunter_bringup)/launch/imu/phidgets_spatial_333_imu.launch" />
 
-    <!-- launch both front and rear zed2 cameras -->
-    <include file="$(find hunter_bringup)/launch/zed_camera/zed_multi_cam_single_nodelet.launch" />
-
-    <!-- convert both zed2 pointclouds to laserscans  -->
-    <include file="$(find hunter_bringup)/launch/laserscan/pointclouid_to_laserscan.launch" />
-
-    <!-- merge both zed2 laserscan topics to one scan topic -->
-    <include file="$(find hunter_bringup)/launch/laserscan/lasers_merger.launch" />
-
-    <!-- launch amcl laserscan localisation -->
-    <include file="$(find hunter_bringup)/launch/laserscan/amcl.launch">
-        <arg name="map_file" value="$(find gofar_navigation)/config/site_files/riseholme/polytunnel/map.yaml" />
+    <!-- launch ouster lidar -->
+    <!-- change ethernet ip to manual 192.168.2.1 and netmask 255.255.255.0 -->
+    <include file="$(find hunter_bringup)/launch/ouster_lidar/ouster_sensor.launch">
+        <arg name="sensor_hostname" default="169.254.141.17" />
+        <arg name="viz" default="false" />
     </include>
 
-    <!-- replay amcl_pose topic -->
-    <node pkg="topic_tools" type="relay" name="relay_amcl_pose" args="/amcl_pose /robot_pose" />
+    <!-- static tf to link lidar to robot -->
+    <node pkg="tf" type="static_transform_publisher" name="os_lidar_base_link_broadcaster" args="0 0 1 0 0 0 base_link os_sensor 100" />
+
+    <!-- convert ouster pointcloud to laserscans  -->
+    <include file="$(find hunter_bringup)/launch/laserscan/pointclouid_to_laserscan_ouster.launch" />
 
     <!-- launch gps, nmea_navsat_driver and robot localisation navsat transform -->
     <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" />
