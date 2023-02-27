@@ -20,35 +20,29 @@
     <!-- launch imu -->
     <include file="$(find hunter_bringup)/launch/imu/phidgets_spatial_333_imu.launch" />
 
+    <!-- static tf to link lidar to robot -->
+    <node pkg="tf" type="static_transform_publisher" name="os_lidar_base_link_broadcaster" args="0 0 1 0 0 0 base_link os_sensor 100" />
+
     <!-- launch ouster lidar -->
     <!-- change ethernet ip to manual 192.168.2.1 and netmask 255.255.255.0 -->
     <include file="$(find hunter_bringup)/launch/ouster_lidar/ouster_sensor.launch">
         <arg name="sensor_hostname" default="169.254.141.17" />
         <arg name="viz" default="false" />
+        <arg name="timestamp_mode" default="TIME_FROM_ROS_TIME" />
     </include>
-
-    <!-- static tf to link lidar to robot -->
-    <node pkg="tf" type="static_transform_publisher" name="os_lidar_base_link_broadcaster" args="0 0 1 0 0 0 base_link os_sensor 100" />
 
     <!-- convert ouster pointcloud to laserscans  -->
     <include file="$(find hunter_bringup)/launch/laserscan/pointclouid_to_laserscan_ouster.launch" />
 
     <!-- launch gps, nmea_navsat_driver and robot localisation navsat transform -->
-    <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" />
+    <!--<include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" />-->
 
     <!-- launch RTK data stream -->
-    <include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />
+    <!--<include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />-->
     
     <!-- launch local ekf localisation base_link to odom -->
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
         <rosparam command="load" file="$(find hunter_bringup)/config/ekf_local.yaml" />
-    </node>
-
-    <!-- launch global ekf localisation odom to map -->
-    <!-- eg at http://docs.ros.org/en/noetic/api/robot_localization/html/integrating_gps.html -->
-    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_global">
-        <remap from="/odometry/filtered" to="/odometry/filtered/global" /> <!-- remap as both ekf nodes publish the same topic /odometry/filtered-->
-        <rosparam command="load" file="$(find hunter_bringup)/config/ekf_global.yaml" />
     </node>
 
 </launch>
