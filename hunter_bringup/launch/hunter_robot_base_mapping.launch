@@ -21,12 +21,12 @@
     <include file="$(find hunter_bringup)/launch/imu/phidgets_spatial_333_imu.launch" />
 
     <!-- static tf to link lidar to robot -->
-    <node pkg="tf" type="static_transform_publisher" name="os_lidar_base_link_broadcaster" args="0 0 1 0 0 0 base_link os_sensor 100" />
+    <node pkg="tf" type="static_transform_publisher" name="os_lidar_base_link_broadcaster" args="0 0 0.5 0 0 0 base_link os_sensor 100" />
 
     <!-- launch ouster lidar -->
     <!-- change ethernet ip to manual 192.168.2.1 and netmask 255.255.255.0 -->
     <include file="$(find hunter_bringup)/launch/ouster_lidar/ouster_sensor.launch">
-        <arg name="sensor_hostname" default="169.254.141.17" />
+        <arg name="sensor_hostname" default="169.254.141.17 " /> <!-- 169.254.141.17 -->
         <arg name="viz" default="false" />
         <arg name="timestamp_mode" default="TIME_FROM_ROS_TIME" />
     </include>
