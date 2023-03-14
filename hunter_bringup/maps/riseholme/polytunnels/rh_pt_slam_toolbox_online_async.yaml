@@ -1,0 +1,7 @@
+image: rh_pt_slam_toolbox_online_async.pgm
+resolution: 0.050000
+origin: [-6.410190, -22.222624, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+
