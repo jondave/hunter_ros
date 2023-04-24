@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <!-- Publish odom TF -->
     <arg name="publish_tf_1"            default="false" />
 
-    <arg name="camera_sn_1"             default="20906251" /> <!-- Very important to be able to identify the camera uniquely--> 
+    <arg name="camera_sn_1"             default="28341662" /> <!-- Very important to be able to identify the camera uniquely--> 
     <arg name="gpu_id_1"                default="-1" />
 
     <!-- Position respect to base frame (i.e. "base_link) -->
@@ -67,7 +67,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <!-- Publish odom TF -->
     <arg name="publish_tf_2"            default="false" /> <!-- Only one node must pushish TF, unless you use a Kalman filter to fuse odometries -->
 
-    <arg name="camera_sn_2"             default="28341662" /> <!-- Very important to be able to identify the camera uniquely-->  
+    <arg name="camera_sn_2"             default="20906251" /> <!-- Very important to be able to identify the camera uniquely-->  
     <arg name="gpu_id_2"                default="-1" />
 
     <!-- Position respect to base frame (i.e. "base_link) -->

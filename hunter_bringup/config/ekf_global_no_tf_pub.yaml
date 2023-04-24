@@ -1,0 +1,95 @@
+# ekf odom to map
+
+# example from https://github.com/mikeferguson/robomagellan/blob/ros2/config/ekf_global.yaml
+# and https://automaticaddison.com/sensor-fusion-using-the-ros-robot-pose-ekf-package/
+
+odom_frame: odom
+base_link_frame: base_link
+world_frame: map
+map_frame: map
+
+two_d_mode: true
+
+predict_to_current_time: true
+
+frequency: 50
+
+# dont publish tf odom to map as slam toolbox or gmapping will do this
+publish_tf: false
+
+odom0: /odom
+odom0_config: [false, false, false,   # x_pos,    y_pos,     z_pos
+               false, false, false,   # roll,     pitch,     yaw
+               true,  true,  false,   # x_vel,    y_vel,     z_vel
+               false, false, true,    # roll_vel, pitch_vel, yaw_vel
+               false, false, false]   # x_accel,  y_accel,   z_accel
+odom0_differential: false
+odom0_queue_size: 10
+
+odom1: /odometry/gps # change to /odometry/gps for real robot
+odom1_config: [true,  true,  false,   # x_pos,    y_pos,     z_pos
+               false, false, false,   # roll,     pitch,     yaw
+               false, false, false,   # x_vel,    y_vel,     z_vel
+               false, false, false,   # roll_vel, pitch_vel, yaw_vel
+               false, false, false]   # x_accel,  y_accel,   z_accel
+odom1_differential: false
+odom1_queue_size: 10
+
+# zed cameras
+# https://github.com/stereolabs/zed-ros-wrapper/issues/603
+#odom2: /zed_multi/zed2_front/zed_nodelet_front/odom
+#odom2_config: [true,  true,  false,   # x_pos,    y_pos,     z_pos
+#               false, false, false,   # roll,     pitch,     yaw
+#               false, false, false,   # x_vel,    y_vel,     z_vel
+#               false, false, false,   # roll_vel, pitch_vel, yaw_vel
+#               false, false, false]   # x_accel,  y_accel,   z_accel
+#odom2_differential: false
+#odom2_queue_size: 10
+
+# if using laserscan amcl pose estimation 
+pose0: /amcl_pose
+pose0_config: [true, true,  false,   # x_pos,    y_pos,     z_pos
+              false, false, true,    # roll,     pitch,     yaw
+              false, false, false,   # x_vel,    y_vel,     z_vel
+              false, false, false,   # roll_vel, pitch_vel, yaw_vel
+              false, false, false]   # x_accel,  y_accel,   z_accel
+pose0_differential: false
+pose0_queue_size: 10
+
+# zed cameras
+# https://github.com/stereolabs/zed-ros-wrapper/issues/603
+#pose1: /zed_multi/zed2_front/zed_nodelet_front/pose_with_covariance
+#pose1_config: [true,  true,  false,    # x_pos,    y_pos,     z_pos
+#               false, false, false,    # roll,     pitch,     yaw
+#               false, false, false,    # x_vel,    y_vel,     z_vel
+#               false, false, false,
+#               false, false, false]
+#pose1_differential: true
+#pose1_relative: false
+#pose1_queue_size: 5
+#pose1_rejection_threshold: 2  # Note the difference in parameter name
+#pose1_nodelay: false
+
+#pose2: /zed_multi/zed2_front/zed_nodelet_rear/pose_with_covariance
+#pose2_config: [true,  true,  false,    # x_pos,    y_pos,     z_pos
+#               false, false, false,    # roll,     pitch,     yaw
+#               false, false, false,    # x_vel,    y_vel,     z_vel
+#               false, false, false,    # roll_vel, pitch_vel, yaw_vel
+#               false, false, false]    # x_accel,  y_accel,   z_accel
+#pose2_differential: true
+#pose2_relative: false
+#pose2_queue_size: 5
+#pose2_rejection_threshold: 2  # Note the difference in parameter name
+#pose2_nodelay: false
+
+# zed cameras
+
+imu0: /imu/data
+imu0_config: [false, false, false,   # x_pos,    y_pos,     z_pos
+              true,  true,  true,    # roll,     pitch,     yaw
+              false, false, false,   # x_vel,    y_vel,     z_vel
+              true,  true,  true,    # roll_vel, pitch_vel, yaw_vel
+              true,  true,  true]    # x_accel,  y_accel,   z_acce
+imu0_differential: true
+imu0_queue_size: 10
+imu0_remove_gravitational_acceleration: true

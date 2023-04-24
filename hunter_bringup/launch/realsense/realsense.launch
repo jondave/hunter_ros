@@ -1,5 +1,5 @@
 <launch>
-  <arg name="serial_no"           default="$(optenv GOFAR_REALSENSE_SERIAL 102422077232)"/> <!-- 112322070028 --> <!-- change to correct serial number -->
+  <arg name="serial_no"           default="$(optenv GOFAR_REALSENSE_SERIAL 051122071998)"/> <!-- 102422077232   112322070028 --> <!-- change to correct serial number -->
   <arg name="usb_port_id"         default=""/>
   <arg name="device_type"         default=""/>
   <arg name="json_file_path"      default=""/>
@@ -132,11 +132,10 @@
   </group>
 
   <!-- Include poincloud_to_laserscan if realsense is attached -->
-  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="realsense_to_laserscan" output="screen">
+  <!--<node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="realsense_to_laserscan" output="screen">
 
       <remap from="cloud_in" to="realsense/depth/color/points"/>
       <remap from="scan" to="realsense/scan"/>
-      <!-- TODO: modify these to match the Realsense D400 series parameters -->
       <rosparam>
           target_frame: base_link # Leave empty to output scan in the pointcloud frame
           tolerance: 1.0
@@ -157,5 +156,5 @@
           # 2->inf : Parallelism level
           concurrency_level: 1
       </rosparam>
-  </node>
+  </node>-->
 </launch>

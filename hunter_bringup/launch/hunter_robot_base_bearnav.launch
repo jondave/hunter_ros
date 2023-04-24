@@ -1,0 +1,30 @@
+<launch>
+    <!-- 
+        to staet USB to CAN adapter run 
+        sudo ip link set can0 up type can bitrate 500000
+    -->
+
+    <!-- start base and load model -->
+    <include file="$(find hunter_base)/launch/hunter_base.launch">
+        <arg name="port_name" default="can0" />
+        <arg name="simulated_robot" default="false" />
+        <arg name="publish_tf" default="false" />
+    </include>
+    
+    <!-- launch robot model for rviz -->    
+    <include file="$(find hunter_bringup)/launch/display_xacro.launch" />
+
+    <!-- launch joy teleop -->
+    <include file="$(find hunter_bringup)/launch/hunter_joy_teleop.launch" />
+
+    <!-- launch imu -->
+    <include file="$(find hunter_bringup)/launch/imu/phidgets_spatial_333_imu.launch" />
+    
+    <!-- launch local ekf localisation base_link to odom -->
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
+        <rosparam command="load" file="$(find hunter_bringup)/config/ekf_local.yaml" />
+    </node>
+
+    <include file="$(find hunter_bringup)/launch/realsense/realsense.launch" />
+
+</launch>
