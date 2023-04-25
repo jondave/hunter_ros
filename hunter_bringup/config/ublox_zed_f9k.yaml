@@ -31,3 +31,4 @@ publish:
     pvt: true
     posecef: false
     hpposllh: true
+    #heading: true

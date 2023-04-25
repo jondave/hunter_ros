@@ -23,6 +23,9 @@
     <!-- launch both front and rear zed2 cameras -->
     <include file="$(find hunter_bringup)/launch/zed_camera/zed_multi_cam_single_nodelet.launch" />
 
+    <!-- launch image_proc to reduce the image size of zed2 cameras -->
+    <!--<include file="$(find hunter_bringup)/launch/zed_camera/image_proc_reduce_resolution.launch" />-->
+
     <!-- convert both zed2 pointclouds to laserscans  -->
     <include file="$(find hunter_bringup)/launch/laserscan/pointclouid_to_laserscan.launch" />
 
@@ -36,6 +39,12 @@
 
     <!-- replay amcl_pose topic -->
     <node pkg="topic_tools" type="relay" name="relay_amcl_pose" args="/amcl_pose /robot_pose" />
+
+    <!-- launch front realsense -->
+    <include file="$(find hunter_bringup)/launch/realsense/realsense.launch" />
+
+    <!-- launch front realsense -->
+    <include file="$(find hunter_bringup)/launch/realsense/realsense_rear.launch" />
 
     <!-- launch gps, nmea_navsat_driver and robot localisation navsat transform -->
     <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" />

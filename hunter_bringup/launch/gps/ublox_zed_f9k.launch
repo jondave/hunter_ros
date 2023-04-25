@@ -41,6 +41,9 @@
 
     <rosparam param="publish_filtered_gps">true</rosparam>
 
+    <rosparam param="wait_for_datum">true</rosparam>
+    <rosparam param="datum">[53.268642038, -0.524509505881, 0.0, map, base_link]</rosparam> <!-- datum for Riseholme -->
+
     <!-- Subscriptions -->
     <remap from="imu/data" to="imu/data" />
     <remap from="gps/fix" to="gps/fix" />

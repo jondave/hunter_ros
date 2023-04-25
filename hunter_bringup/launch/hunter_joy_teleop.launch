@@ -13,4 +13,8 @@
         <rosparam command="load" file="$(find hunter_bringup)/config/twist_mux.yaml" />
         <remap from="cmd_vel_out" to="cmd_vel"/>
     </node>
+
+    <!-- include this to cancel move base goals from controller by pressing B button -->
+    <node name="joy_remove_goal" pkg="hunter_bringup" type="joy_remove_goal.py" output="screen"/>
+
   </launch>

@@ -14,23 +14,23 @@ predict_to_current_time: true
 
 frequency: 50
 
-odom0: /odom
-odom0_config: [false, false, false,   # x_pos,    y_pos,     z_pos
+#odom0: /odom
+#odom0_config: [false, false, false,   # x_pos,    y_pos,     z_pos
+#               false, false, false,   # roll,     pitch,     yaw
+#               true,  true,  false,   # x_vel,    y_vel,     z_vel
+#               false, false, true,    # roll_vel, pitch_vel, yaw_vel
+#               false, false, false]   # x_accel,  y_accel,   z_accel
+#odom0_differential: false
+#odom0_queue_size: 10
+
+odom0: /odometry/gps # change to /odometry/gps for real robot
+odom0_config: [true,  true,  false,   # x_pos,    y_pos,     z_pos
                false, false, false,   # roll,     pitch,     yaw
-               true,  true,  false,   # x_vel,    y_vel,     z_vel
-               false, false, true,    # roll_vel, pitch_vel, yaw_vel
+               false, false, false,   # x_vel,    y_vel,     z_vel
+               false, false, false,   # roll_vel, pitch_vel, yaw_vel
                false, false, false]   # x_accel,  y_accel,   z_accel
 odom0_differential: false
 odom0_queue_size: 10
-
-#odom1: /odometry/gps # change to /odometry/gps for real robot
-#odom1_config: [true,  true,  false,   # x_pos,    y_pos,     z_pos
-#               false, false, false,   # roll,     pitch,     yaw
-#               false, false, false,   # x_vel,    y_vel,     z_vel
-#               false, false, false,   # roll_vel, pitch_vel, yaw_vel
-#               false, false, false]   # x_accel,  y_accel,   z_accel
-#odom1_differential: false
-#odom1_queue_size: 10
 
 # zed cameras
 # https://github.com/stereolabs/zed-ros-wrapper/issues/603
@@ -44,14 +44,24 @@ odom0_queue_size: 10
 #odom2_queue_size: 10
 
 # if using laserscan amcl pose estimation 
-pose0: /amcl_pose
-pose0_config: [true, true,  false,   # x_pos,    y_pos,     z_pos
-              false, false, true,    # roll,     pitch,     yaw
-              false, false, false,   # x_vel,    y_vel,     z_vel
-              false, false, false,   # roll_vel, pitch_vel, yaw_vel
-              false, false, false]   # x_accel,  y_accel,   z_accel
-pose0_differential: false
-pose0_queue_size: 10
+#pose0: /amcl_pose
+#pose0_config: [true, true,  false,   # x_pos,    y_pos,     z_pos
+#              false, false, true,    # roll,     pitch,     yaw
+#              false, false, false,   # x_vel,    y_vel,     z_vel
+#              false, false, false,   # roll_vel, pitch_vel, yaw_vel
+#              false, false, false]   # x_accel,  y_accel,   z_accel
+#pose0_differential: false
+#pose0_queue_size: 10
+
+# only use amcl for yaw so can use 2d pose estinmation in rviz
+#pose0: /amcl_pose
+#pose0_config: [false, false,  false,   # x_pos,    y_pos,     z_pos
+#               false, false,  true,    # roll,     pitch,     yaw
+#               false, false,  false,   # x_vel,    y_vel,     z_vel
+#               false, false,  false,   # roll_vel, pitch_vel, yaw_vel
+#               false, false,  false]   # x_accel,  y_accel,   z_accel
+#pose0_differential: false
+#pose0_queue_size: 10
 
 # zed cameras
 # https://github.com/stereolabs/zed-ros-wrapper/issues/603
