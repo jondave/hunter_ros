@@ -12,7 +12,7 @@ two_d_mode: true
 
 predict_to_current_time: true
 
-frequency: 50
+frequency: 20 # 50
 
 #odom0: /odom
 #odom0_config: [false, false, false,   # x_pos,    y_pos,     z_pos
@@ -97,6 +97,7 @@ imu0_config: [false, false, false,   # x_pos,    y_pos,     z_pos
               false, false, false,   # x_vel,    y_vel,     z_vel
               true,  true,  true,    # roll_vel, pitch_vel, yaw_vel
               true,  true,  true]    # x_accel,  y_accel,   z_acce
-imu0_differential: true
+imu0_differential: false
+imu0_relative: false
 imu0_queue_size: 10
 imu0_remove_gravitational_acceleration: true
