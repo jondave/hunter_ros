@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+  <arg name="param_file_name"     doc="name of param file, e.g. rover" 
+                                  default="ublox_zed_f9p"/>
+  <arg name="param_file_dir"      doc="directory to look for $(arg param_file_name).yaml"
+                                  default="$(find hunter_bringup)/config" />
+
+  <arg name="node_name"           doc="name of this node"
+                                  default="gps" />
+  <arg name="output"              default="screen" />
+  <arg name="respawn"             default="true" />
+  <arg name="respawn_delay"       default="30" />
+  <arg name="clear_params"        default="true" />  
+ 
+  <arg name="frame_id"            default="base_link" /> <!-- gps_link -->
+
+  <node pkg="ublox_gps" type="ublox_gps" name="$(arg node_name)"
+        output="$(arg output)"
+        clear_params="$(arg clear_params)"
+        respawn="$(arg respawn)"
+        respawn_delay="$(arg respawn_delay)">
+    <rosparam command="load"
+              file="$(arg param_file_dir)/$(arg param_file_name).yaml" />
+  </node>
+
+  <group ns="gps">
+  <!-- NavSat Processing -->
+    <node pkg="nmea_navsat_driver" type="nmea_topic_driver" name="nmea_topic_driver">
+    </node>
+  </group>
+
+  <!-- converts gps cooridates to map cooridates and vice versa -->
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" >
+    <rosparam param="magnetic_declination_radians">-0.006806784</rosparam> <!-- 0.39° E  ± 0.40° == 0.006806784 - https://www.ngdc.noaa.gov/geomag/calculators/magcalc.shtml -->
+    <rosparam param="roll_offset">0</rosparam>
+    <rosparam param="pitch_offset">0</rosparam>
+    <rosparam param="yaw_offset">0</rosparam> <!-- 1.320708762053004 -->
+    <rosparam param="zero_altitude">true</rosparam>
+    <rosparam param="broadcast_utm_transform">false</rosparam>
+
+    <rosparam param="publish_filtered_gps">true</rosparam>
+
+    <rosparam param="use_odometry_yaw">false</rosparam>
+
+    <rosparam param="frequency">20</rosparam>
+
+    <rosparam param="wait_for_datum">true</rosparam>
+    <rosparam param="datum">[53.268642038, -0.524509505881, 0.0, map, base_link]</rosparam> <!-- datum for Riseholme -->
+
+    <!-- Subscriptions -->
+    <remap from="imu/data" to="imu/data" />
+    <remap from="gps/fix" to="gps/fix" />
+    <remap from="odometry/filtered" to="odometry/filtered/global" />
+   </node>  
+
+  <!--<node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" >
+    <rosparam>
+      magnetic_declination_radians: 0
+      roll_offset: 0
+      pitch_offset: 0
+      yaw_offset: 0
+      zero_altitude: false
+      broadcast_utm_transform: false
+    </rosparam>
+  </node>-->
+</launch>

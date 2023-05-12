@@ -21,24 +21,24 @@
     <include file="$(find hunter_bringup)/launch/imu/phidgets_spatial_333_imu.launch" />
 
     <!-- launch both front and rear zed2 cameras -->
-    <include file="$(find hunter_bringup)/launch/zed_camera/zed_multi_cam_single_nodelet.launch" />
+    <!--<include file="$(find hunter_bringup)/launch/zed_camera/zed_multi_cam_single_nodelet.launch" />-->
 
     <!-- launch image_proc to reduce the image size of zed2 cameras -->
     <!--<include file="$(find hunter_bringup)/launch/zed_camera/image_proc_reduce_resolution.launch" />-->
 
     <!-- convert both zed2 pointclouds to laserscans  -->
-    <include file="$(find hunter_bringup)/launch/laserscan/pointclouid_to_laserscan.launch" />
+    <!--<include file="$(find hunter_bringup)/launch/laserscan/pointclouid_to_laserscan.launch" />-->
 
     <!-- merge both zed2 laserscan topics to one scan topic -->
-    <include file="$(find hunter_bringup)/launch/laserscan/lasers_merger.launch" />
+    <!--<include file="$(find hunter_bringup)/launch/laserscan/lasers_merger.launch" />-->
 
     <!-- launch amcl laserscan localisation -->
-    <include file="$(find hunter_bringup)/launch/laserscan/amcl.launch">
+    <!--<include file="$(find hunter_bringup)/launch/laserscan/amcl.launch">
         <arg name="map_file" value="$(find gofar_navigation)/config/site_files/riseholme/polytunnel/map.yaml" />
-    </include>
+    </include>-->
 
     <!-- replay amcl_pose topic -->
-    <node pkg="topic_tools" type="relay" name="relay_amcl_pose" args="/amcl_pose /robot_pose" />
+    <!--<node pkg="topic_tools" type="relay" name="relay_amcl_pose" args="/amcl_pose /robot_pose" />-->
 
     <!-- launch front realsense -->
     <include file="$(find hunter_bringup)/launch/realsense/realsense.launch" />
@@ -47,7 +47,7 @@
     <include file="$(find hunter_bringup)/launch/realsense/realsense_rear.launch" />
 
     <!-- launch gps, nmea_navsat_driver and robot localisation navsat transform -->
-    <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" />
+    <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" /> <!-- ublox_zed_f9k or ublox_zed_f9p -->
 
     <!-- launch RTK data stream -->
     <include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />
