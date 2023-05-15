@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="hunter_bringup" type="combine_rgb_images.py" name="combine_rgb_images" output="screen">
+    <remap from="/image_topic1" to="/realsense/color/image_raw"/>
+    <remap from="/image_topic2" to="/realsense_rear/color/image_raw"/>
+    <remap from="/combined_image_topic" to="/realsense/combined_colour_image"/>
+  </node>
+</launch>

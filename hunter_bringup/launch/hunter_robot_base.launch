@@ -21,7 +21,7 @@
     <include file="$(find hunter_bringup)/launch/imu/phidgets_spatial_333_imu.launch" />
 
     <!-- launch both front and rear zed2 cameras -->
-    <!--<include file="$(find hunter_bringup)/launch/zed_camera/zed_multi_cam_single_nodelet.launch" />-->
+    <include file="$(find hunter_bringup)/launch/zed_camera/zed_multi_cam_single_nodelet.launch" />
 
     <!-- launch image_proc to reduce the image size of zed2 cameras -->
     <!--<include file="$(find hunter_bringup)/launch/zed_camera/image_proc_reduce_resolution.launch" />-->
@@ -45,6 +45,9 @@
 
     <!-- launch front realsense -->
     <include file="$(find hunter_bringup)/launch/realsense/realsense_rear.launch" />
+
+    <!-- combine both front and rear realsense rgb images into one image side by side -->
+    <!--<include file="$(find hunter_bringup)/launch/realsense/realsense_combine_rgb_images.launch" />-->
 
     <!-- launch gps, nmea_navsat_driver and robot localisation navsat transform -->
     <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" /> <!-- ublox_zed_f9k or ublox_zed_f9p -->
