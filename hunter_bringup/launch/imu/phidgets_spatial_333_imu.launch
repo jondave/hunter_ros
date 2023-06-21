@@ -22,8 +22,8 @@
     <!-- <param name="hub_port" value="0"/> -->
 
     # optional param frame_id, default is "imu_link"
-    <!-- <param name="frame_id" value="imu_link"/> -->
-    <param name="frame_id" value="base_link"/>
+    <param name="frame_id" value="imu_link"/>
+    <!--<param name="frame_id" value="base_link"/>-->
 
     # optional param linear_acceleration_stdev, default is 280ug
     <!-- <param name="linear_acceleration_stdev" value="0.002745862"/> -->
@@ -86,5 +86,7 @@
     <param name="use_mag" value="true"/>
     <param name="publish_tf" value="false"/>
   </node>
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="imu_tf_publisher" args="0 0 0 0 0 0 base_link imu_link" /> <!-- x y z yaw pitch roll parent_frame child_frame -->
 
 </launch>

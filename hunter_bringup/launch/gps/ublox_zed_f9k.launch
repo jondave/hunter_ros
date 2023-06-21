@@ -24,7 +24,7 @@
               file="$(arg param_file_dir)/$(arg param_file_name).yaml" />
   </node>
 
-  <node pkg="tf2_ros" type="static_transform_publisher" name="gps_tf_publisher" args="0 0 0 0 0 0 base_link gps_link" /> <!-- x y z yaw pitch roll parent_frame child_frame -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="gps_tf_publisher" args="0.45 0.18 0.55 0 0 0 base_link gps_link" /> <!-- x y z yaw pitch roll parent_frame child_frame -->
 
   <group ns="gps">
   <!-- NavSat Processing -->
