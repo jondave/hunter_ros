@@ -62,8 +62,9 @@
 
     <!-- launch global ekf localisation odom to map -->
     <!-- eg at http://docs.ros.org/en/noetic/api/robot_localization/html/integrating_gps.html -->
+    <!-- remap as both ekf nodes publish the same topic /odometry/filtered-->
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_global">
-        <remap from="/odometry/filtered" to="/odometry/filtered/global" /> <!-- remap as both ekf nodes publish the same topic /odometry/filtered-->
+        <remap from="/odometry/filtered" to="/odometry/filtered/global" />
         <rosparam command="load" file="$(find hunter_bringup)/config/ekf_global.yaml" />
     </node>
 
