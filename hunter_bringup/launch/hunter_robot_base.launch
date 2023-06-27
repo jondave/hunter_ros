@@ -49,6 +49,10 @@
     <!-- combine both front and rear realsense rgb images into one image side by side -->
     <!--<include file="$(find hunter_bringup)/launch/realsense/realsense_combine_rgb_images.launch" />-->
 
+    <!-- Run the map server DONT run when AMCL is running -->
+    <!--<arg name="map_file" default="$(find gofar_navigation)/config/site_files/riseholme/polytunnel/map.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />-->
+
     <!-- launch gps, nmea_navsat_driver and robot localisation navsat transform -->
     <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" /> <!-- ublox_zed_f9k or ublox_zed_f9p -->
 
