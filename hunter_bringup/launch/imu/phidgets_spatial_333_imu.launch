@@ -83,7 +83,7 @@
 
     <param name="use_mag" value="true"/>
     <param name="publish_tf" value="false"/>
-    <param name="mag_bias_z" value="0.0015"/> <!-- 0.00035 or 0.0015 changes daily -->
+    <param name="mag_bias_z" value="0.00035"/> <!-- 0.00035 or 0.0015 or 0.0008 changes daily -->
 
   </node>
 
