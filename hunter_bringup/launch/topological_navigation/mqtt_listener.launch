@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node pkg="hunter_bringup" type="mqtt_listener.py" respawn="false" name="mqtt_listener_node" output="screen">
+  </node>
+
+</launch>
