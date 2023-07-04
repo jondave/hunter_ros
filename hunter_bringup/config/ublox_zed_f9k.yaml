@@ -1,7 +1,7 @@
 # Configuration Settings for ZED-F9K device
 # Please change these settings according as necessary
 device: /dev/ttyACM0
-frame_id: base_link # gps
+frame_id: gps_link # gps
 uart1:
   baudrate: 115200
 config_on_startup: true
