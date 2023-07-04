@@ -43,7 +43,7 @@ init_cmd: |
   export_default METRIC_MAP "${SITE_PATH}/map.yaml" 
   export_default NOGO_MAP "${SITE_PATH}/nogo_map.yaml"
   ###############################################################################################################
-  export_default TMAP_FILE "${SITE_PATH}/${APPLICATION}/tmap.tmap2" # tmap_move_base_only.tmap2 # tmap_bearnav2.tmap2
+  export_default TMAP_FILE "${SITE_PATH}/${APPLICATION}/tmap_row_entrance_node.tmap2" # tmap.tmap2 # tmap_move_base_only.tmap2 # tmap_bearnav2.tmap2
   
 
   # Navigation
