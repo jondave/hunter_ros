@@ -54,7 +54,7 @@
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />-->
 
     <!-- launch gps, nmea_navsat_driver and robot localisation navsat transform -->
-    <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" /> <!-- ublox_zed_f9k or ublox_zed_f9p -->
+    <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9p.launch" /> <!-- ublox_zed_f9k or ublox_zed_f9p -->
 
     <!-- launch RTK data stream -->
     <include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />

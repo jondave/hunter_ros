@@ -8,12 +8,13 @@ save:
   device: 4                 # Save to EEPROM
 
 device: /dev/ttyACM0        # change to correct USB device
-#frame_id: gps              # now in launch file
-rate: 4                     # in Hz
+frame_id: gps_link # gps
+rate: 20                    # in Hz
 nav_rate: 4                 # [# of measurement cycles], recommended 1 Hz, may 
                             # be either 5 Hz (Dual constellation) or 
                             # 8 Hz (GPS only)
 dynamic_model: automotive   # automotive Used for applications with equivalent dynamics to those of a passenger car. Low vertical acceleration assumed 
+use_adr: true                # Whether to enable dead reckoning
 
 fix_mode: auto
 enable_ppp: false           # Not supported by C94-M8P

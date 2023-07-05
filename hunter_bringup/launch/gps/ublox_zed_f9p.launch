@@ -34,7 +34,7 @@
 
   <!-- converts gps cooridates to map cooridates and vice versa -->
   <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" >
-    <rosparam param="magnetic_declination_radians">1.13</rosparam> <!-- 0.39° E  ± 0.40° == 0.006806784 - https://www.ngdc.noaa.gov/geomag/calculators/magcalc.shtml -->
+    <rosparam param="magnetic_declination_radians">-0.006806784</rosparam> <!-- 0.39° E  ± 0.40° == 0.006806784 - https://www.ngdc.noaa.gov/geomag/calculators/magcalc.shtml -->
     <!-- Riseholme: -0.006806784 -->
     <!-- Place UK Greenhouse: 1.13 ??? -->
 
@@ -51,16 +51,16 @@
     <rosparam param="frequency">20</rosparam>
  
     <rosparam param="wait_for_datum">true</rosparam>
-    <!--<rosparam param="datum">[53.268642038, -0.524509505881, 0.0, map, base_link]</rosparam>--> <!-- datum for Riseholme -->
-    <rosparam param="datum">[52.7497468, 1.430062, 0.0, map, base_link]</rosparam> <!-- datum for Place UK Greenhouse -->
+    <rosparam param="datum">[53.268642038, -0.524509505881, 0.0, map, base_link]</rosparam> <!-- datum for Riseholme -->
+    <!--<rosparam param="datum">[52.7497468, 1.430062, 0.0, map, base_link]</rosparam>--> <!-- datum for Place UK Greenhouse -->
 
-  <!-- Place UK Greenhouse
-  x: -0.6697258949279785
-  y: 0.2699470520019531
+    <!-- Place UK Greenhouse
+    x: -0.6697258949279785
+    y: 0.2699470520019531
 
-  latitude: 52.7497468
-  longitude: 1.430062
-  -->
+    latitude: 52.7497468
+    longitude: 1.430062
+    -->
 
     <!-- Subscriptions -->
     <remap from="imu/data" to="imu/data" />
