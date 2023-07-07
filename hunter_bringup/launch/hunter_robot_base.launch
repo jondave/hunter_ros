@@ -58,6 +58,7 @@
 
     <!-- launch RTK data stream -->
     <include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />
+    <!--<include file="$(find ntrip_ros)/launch/ntrip_ros_lcas_base_station.launch" />-->
     
     <!-- launch local ekf localisation base_link to odom -->
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
