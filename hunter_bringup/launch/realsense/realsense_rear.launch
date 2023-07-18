@@ -136,11 +136,10 @@
   </group>
 
   <!-- Include poincloud_to_laserscan if realsense is attached -->
-  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="realsense_rear_to_laserscan" output="screen">
+  <!--<node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="realsense_rear_to_laserscan" output="screen">
 
       <remap from="cloud_in" to="realsense_rear/depth/color/points"/>
       <remap from="scan" to="realsense_rear/scan"/>
-      <!-- TODO: modify these to match the Realsense D400 series parameters -->
       <rosparam>
           target_frame: realsense_rear_rotated_link # Leave empty to output scan in the pointcloud frame
           tolerance: 1.0
@@ -161,5 +160,5 @@
           # 2->inf : Parallelism level
           concurrency_level: 1
       </rosparam>
-  </node>
+  </node>-->
 </launch>

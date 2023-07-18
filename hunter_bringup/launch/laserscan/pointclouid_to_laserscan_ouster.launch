@@ -8,11 +8,16 @@
       <rosparam>
           target_frame: base_link # Leave empty to output scan in the pointcloud frame
           tolerance: 1.0
-          min_height: 0.3 # 0.05
-          max_height: 0.6 # 1.5
+          min_height: -0.05 # 0.05 # heights are from target frame # middle of lidar 0.52 above ground
+          max_height: 0.05 # 1.5
 
-          angle_min: -3.1415926535897 # -1.570796326794 #-0.7592182246175333 # -(87/2))*M_PI/180.0
-          angle_max: 3.1415926535897 # 1.570796326794 #0.7592182246175333 # (87/2))*M_PI/180.0
+          # angles
+          # 90 deg == 1.570796326794
+          # 135 deg == 2.35691
+          # 180 deg == 3.1415926535897
+
+          angle_min: -2.35691 # -3.1415926535897 # -1.570796326794 #-0.7592182246175333 # -(87/2))*M_PI/180.0
+          angle_max: 2.35691 # 3.1415926535897 # 1.570796326794 #0.7592182246175333 # (87/2))*M_PI/180.0
           angle_increment: 0.005 # M_PI/360.0
           scan_time: 0.3333
           range_min: 0.105

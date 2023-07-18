@@ -21,20 +21,35 @@
     <include file="$(find hunter_bringup)/launch/imu/phidgets_spatial_333_imu.launch" />
 
     <!-- launch both front and rear zed2 cameras -->
-    <include file="$(find hunter_bringup)/launch/zed_camera/zed_multi_cam_single_nodelet.launch" />
+    <!--<include file="$(find hunter_bringup)/launch/zed_camera/zed_multi_cam_single_nodelet.launch" />-->
 
     <!-- launch image_proc to reduce the image size of zed2 cameras -->
     <!--<include file="$(find hunter_bringup)/launch/zed_camera/image_proc_reduce_resolution.launch" />-->
 
     <!-- convert both zed2 pointclouds to laserscans  -->
     <!--<include file="$(find hunter_bringup)/launch/laserscan/pointclouid_to_laserscan.launch" />-->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="os_lidar_base_link_broadcaster" args="0.58 0 0.15 0 0 0 base_link os_sensor" /> <!-- x y z yaw pitch roll parent_frame child_frame -->
+
+    <!-- launch ouster lidar -->
+    <!-- change ethernet ip to manual 192.168.2.1 and netmask 255.255.255.0 -->
+    <!-- ip for current lidar 169.254.141.17 -->
+    <!--<include file="$(find hunter_bringup)/launch/ouster_lidar/ouster_sensor.launch">-->
+    <!--<include file="$(find ouster_ros)/launch/sensor.launch">
+        <arg name="sensor_hostname" default="169.254.141.17" />
+        <arg name="viz" default="false" />
+        <arg name="timestamp_mode" default="TIME_FROM_ROS_TIME" />
+    </include>-->
+    <!-- roslaunch ouster_ros sensor.launch sensor_hostname:=169.254.141.17 timestamp_mode:=TIME_FROM_ROS_TIME viz:=false -->
+    
+    <!-- convert ouster pointcloud to laserscans  -->
+    <include file="$(find hunter_bringup)/launch/laserscan/pointclouid_to_laserscan_ouster.launch" />
 
     <!-- merge both zed2 laserscan topics to one scan topic -->
     <!--<include file="$(find hunter_bringup)/launch/laserscan/lasers_merger.launch" />-->
 
-    <!-- launch amcl laserscan localisation -->
+    <!-- launch amcl laserscan localisation --> <!-- $(find gofar_navigation)/config/site_files/riseholme/polytunnel/map.yaml -->
     <!--<include file="$(find hunter_bringup)/launch/laserscan/amcl.launch">
-        <arg name="map_file" value="$(find gofar_navigation)/config/site_files/riseholme/polytunnel/map.yaml" />
+        <arg name="map_file" value="$(find gofar_navigation)/config/site_files/placeuk/greenhouse/map.yaml" />
     </include>-->
 
     <!-- replay amcl_pose topic -->
@@ -43,7 +58,7 @@
     <!-- launch front realsense -->
     <include file="$(find hunter_bringup)/launch/realsense/realsense.launch" />
 
-    <!-- launch front realsense -->
+    <!-- launch rear realsense -->
     <include file="$(find hunter_bringup)/launch/realsense/realsense_rear.launch" />
 
     <!-- combine both front and rear realsense rgb images into one image side by side -->
@@ -57,8 +72,8 @@
     <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9p.launch" /> <!-- ublox_zed_f9k or ublox_zed_f9p -->
 
     <!-- launch RTK data stream -->
-    <include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />
-    <!--<include file="$(find ntrip_ros)/launch/ntrip_ros_lcas_base_station.launch" />-->
+    <!--<include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />-->
+    <include file="$(find ntrip_ros)/launch/ntrip_ros_lcas_base_station.launch" />
     
     <!-- launch local ekf localisation base_link to odom -->
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">

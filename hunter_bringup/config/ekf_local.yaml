@@ -66,13 +66,17 @@ odom0_queue_size: 10
 
 imu0: /imu/data
 imu0_config: [false, false, false,   # x_pos,    y_pos,     z_pos
-              false, false, fasle,    # roll,     pitch,     yaw
+              false, false, false,    # roll,     pitch,     yaw
               false, false, false,   # x_vel,    y_vel,     z_vel
               true,  true,  true,    # roll_vel, pitch_vel, yaw_vel
               false, false, false]   # x_accel,  y_accel,   z_acce
-imu0_differential: true
+imu0_differential: false # true
+imu0_relative: false # new
 imu0_queue_size: 10
 imu0_remove_gravitational_acceleration: true
+imu0_pose_rejection_threshold: 0.8                
+imu0_twist_rejection_threshold: 0.8                
+imu0_linear_acceleration_rejection_threshold: 0.8  
 
 # zed camera front imu
 #imu1: /zed_multi/zed2_front/zed_nodelet_front/imu/data
@@ -97,3 +101,40 @@ imu0_remove_gravitational_acceleration: true
 #imu2_relative: true
 #imu2_queue_size: 10
 #imu2_remove_gravitational_acceleration: true
+
+use_control: false
+
+process_noise_covariance: [0.05, 0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+                          0,    0.05, 0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+                          0,    0,    0.05, 0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+                          0,    0,    0,    0.05, 0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+                          0,    0,    0,    0,    0.05, 0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+                          0,    0,    0,    0,    0,    0.12, 0,     0,     0,    0,    0,    0,    0,    0,    0,
+                          0,    0,    0,    0,    0,    0,    0.08, 0,     0,    0,    0,    0,    0,    0,    0,
+                          0,    0,    0,    0,    0,    0,    0,     0.08, 0,    0,    0,    0,    0,    0,    0,
+                          0,    0,    0,    0,    0,    0,    0,     0,     0.08, 0,    0,    0,    0,    0,    0,
+                          0,    0,    0,    0,    0,    0,    0,     0,     0,    0.03, 0,    0,    0,    0,    0,
+                          0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0.03, 0,    0,    0,    0,
+                          0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0.07, 0,    0,    0,
+                          0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0.01, 0,    0,
+                          0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0.01, 0,
+                          0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0.015]
+
+
+
+
+initial_estimate_covariance: [1e-9, 0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+                              0,    1e-9, 0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+                              0,    0,    1e-9, 0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+                              0,    0,    0,    0.03, 0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+                              0,    0,    0,    0,    0.03, 0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+                              0,    0,    0,    0,    0,    1e-9, 0,    0,    0,    0,     0,     0,     0,    0,    0,
+                              0,    0,    0,    0,    0,    0,    1e-9, 0,    0,    0,     0,     0,     0,    0,    0,
+                              0,    0,    0,    0,    0,    0,    0,    1e-9, 0,    0,     0,     0,     0,    0,    0,
+                              0,    0,    0,    0,    0,    0,    0,    0,    1e-9, 0,     0,     0,     0,    0,    0,
+                              0,    0,    0,    0,    0,    0,    0,    0,    0,    1e-9,  0,     0,     0,    0,    0,
+                              0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     1e-9,  0,     0,    0,    0,
+                              0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     1e-9,  0,    0,    0,
+                              0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     1e-9, 0,    0,
+                              0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    1e-9, 0,
+                              0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    1e-9]

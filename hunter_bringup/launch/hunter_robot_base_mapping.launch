@@ -21,33 +21,42 @@
     <include file="$(find hunter_bringup)/launch/imu/phidgets_spatial_333_imu.launch" />
 
     <!-- static tf to link lidar to robot -->
-    <node pkg="tf" type="static_transform_publisher" name="os_lidar_base_link_broadcaster" args="0 0 0.5 0 0 0 base_link os_sensor 100" />
+    <!--<node pkg="tf" type="static_transform_publisher" name="os_lidar_base_link_broadcaster" args="0 0 0.5 0 0 0 base_link os_sensor 100" />-->
+    <!--<node pkg="tf" type="static_transform_publisher" name="os_lidar_base_link_broadcaster" args="0.8 0 0.2 0 0 0 base_link os_sensor 100" />-->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="os_lidar_base_link_broadcaster" args="0.58 0 0.15 0 0 0 base_link os_sensor" /> <!-- x y z yaw pitch roll parent_frame child_frame -->
+
 
     <!-- launch ouster lidar -->
     <!-- change ethernet ip to manual 192.168.2.1 and netmask 255.255.255.0 -->
-    <include file="$(find hunter_bringup)/launch/ouster_lidar/ouster_sensor.launch">
-        <arg name="sensor_hostname" default="169.254.141.17 " /> <!-- 169.254.141.17 -->
+    <!-- ip for current lidar 169.254.141.17 -->
+    <!--<include file="$(find hunter_bringup)/launch/ouster_lidar/ouster_sensor.launch">-->
+    <!--<include file="$(find ouster_ros)/launch/sensor.launch">
+        <arg name="sensor_hostname" default="169.254.141.17" />
         <arg name="viz" default="false" />
         <arg name="timestamp_mode" default="TIME_FROM_ROS_TIME" />
-    </include>
+    </include>-->
+    <!-- roslaunch ouster_ros sensor.launch sensor_hostname:=169.254.141.17 timestamp_mode:=TIME_FROM_ROS_TIME viz:=false -->
 
     <!-- convert ouster pointcloud to laserscans  -->
     <include file="$(find hunter_bringup)/launch/laserscan/pointclouid_to_laserscan_ouster.launch" />
 
     <!-- launch gps, nmea_navsat_driver and robot localisation navsat transform -->
-    <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9k.launch" />
+    <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9p.launch" /> <!-- ublox_zed_f9k or ublox_zed_f9p -->
 
     <!-- launch RTK data stream -->
-    <include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />
+    <include file="$(find ntrip_ros)/launch/ntrip_ros_lcas_base_station.launch" />
 
     <!-- launch realsense -->
-    <!--<include file="$(find hunter_bringup)/launch/realsense/realsense.launch" />-->
+    <include file="$(find hunter_bringup)/launch/realsense/realsense.launch" />
+
+    <!-- launch rear realsense -->
+    <include file="$(find hunter_bringup)/launch/realsense/realsense_rear.launch" />
 
     <!-- launch one zed camera -->
     <!--<include file="$(find hunter_bringup)/launch/zed_camera/zed2i.launch" />-->
 
     <!-- launch both front and rear zed2 cameras -->
-    <include file="$(find hunter_bringup)/launch/zed_camera/zed_multi_cam_single_nodelet.launch" />
+    <!--<include file="$(find hunter_bringup)/launch/zed_camera/zed_multi_cam_single_nodelet.launch" />-->
     
     <!-- launch local ekf localisation base_link to odom -->
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
@@ -60,5 +69,6 @@
         <remap from="/odometry/filtered" to="/odometry/filtered/global" /> <!-- remap as both ekf nodes publish the same topic /odometry/filtered-->
         <rosparam command="load" file="$(find hunter_bringup)/config/ekf_global_no_tf_pub.yaml" />
     </node>
-
+    
+    <node pkg="rviz" name="rviz" type="rviz" output="screen" required="false" launch-prefix="bash -c 'sleep 5; $0 $@' " args="-d $(find hunter_bringup)/viz/hunter2_mapping.rviz"/>
 </launch>

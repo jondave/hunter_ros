@@ -14,7 +14,8 @@ class MqttCommandRetriever:
 
     ROBOT_ID = os.getenv('ROBOT_ID', "gofar") # ENVIRONMENT VARIABLE
     #MQTT_BROKER_IP = 'mqtt.lcas.group'
-    MQTT_BROKER_IP = '10.101.8.31'
+    #MQTT_BROKER_IP = '10.101.8.31'
+    MQTT_BROKER_IP = 'tuf1'
     MQTT_BROKER_PORT = 1883
     
     mqtt_client = None
