@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>  
+  <node name="dual_gps_to_heading" pkg="hunter_bringup" type="dual_gps_to_heading.py" output="screen" />
+</launch>

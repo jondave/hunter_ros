@@ -70,10 +70,12 @@
 
     <!-- launch gps, nmea_navsat_driver and robot localisation navsat transform -->
     <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9p.launch" /> <!-- ublox_zed_f9k or ublox_zed_f9p -->
+    <include file="$(find hunter_bringup)/launch/gps/ublox_zed_f9p_front.launch" />
+    <include file="$(find hunter_bringup)/launch/gps/dual_gps_to_heading.launch" />
 
     <!-- launch RTK data stream -->
-    <!--<include file="$(find ntrip_ros)/launch/ntrip_ros.launch" />-->
-    <include file="$(find ntrip_ros)/launch/ntrip_ros_lcas_base_station.launch" />
+    <include file="$(find ntrip_ros)/launch/ntrip_ros_lincoln.launch" />
+    <!--<include file="$(find ntrip_ros)/launch/ntrip_ros_lcas_base_station.launch" />-->
     
     <!-- launch local ekf localisation base_link to odom -->
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">

@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <arg name="machine" default="localhost" />
+  <arg name="user" default="" />
+
+  <!-- Robot base frame. -->
+  <arg name="base_frame" default="base_link" />
+  <!-- If we are using the restricted tmap rather than the normal tmap. Must first publish the robot type: rostopic pub /type std_msgs/String "data: $RES_ROBOT_TYPE" -->
+  <arg name="use_restrictions" default="false"/>
+
+
+  <machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
+
+  <node pkg="topological_navigation" name="restrictions_manager" type="restrictions_manager.py" output="screen" respawn="true" if="$(arg use_restrictions)" >
+    <!--param name="config_file" type="str" value="$(arg coord_config_file)"/-->
+    <param name="out_topic" type="str" value="restricted_topological_map"/>
+    <remap from="type" to="robot_type" />
+    <remap from="task" to="task_type" />
+  </node>
+
+  <node pkg="topological_navigation" name="topological_transform_publisher" type="topological_transform_publisher.py" output="screen" respawn="true">
+    <remap from="topological_map_2" to="restricted_topological_map_2" if="$(arg use_restrictions)"/>
+    <remap from="topological_map_2" to="/topological_map_2" unless="$(arg use_restrictions)"/>
+  </node>
+
+  <node pkg="topological_navigation" name="topological_localisation" type="localisation.py" output="screen" respawn="true">
+    <param name="base_frame" value="$(arg base_frame)"/>
+    <remap from="/topological_map_2" to="/restricted_topological_map_2" if="$(arg use_restrictions)"/>
+    <remap from="/topological_map" to="/restricted_topological_map"  if="$(arg use_restrictions)"/>
+  </node>
+
+  <node pkg="topological_navigation" type="visualise_map2.py" name="visualise_map" respawn="true">
+    <remap from="/topological_map_2" to="/restricted_topological_map_2"  if="$(arg use_restrictions)"/>
+    <remap from="/topological_map" to="/restricted_topological_map"  if="$(arg use_restrictions)"/>
+  </node>
+
+</launch>

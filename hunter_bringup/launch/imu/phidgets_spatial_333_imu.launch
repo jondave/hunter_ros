@@ -99,11 +99,12 @@
 
     <param name="use_mag" value="true"/>
     <param name="publish_tf" value="false"/>
-    <!--<param name="mag_bias_z" value="0.00035"/>--> <!-- Riseholme --> <!-- 0.00035 or 0.0015 or 0.0008 changes daily -->
+    <param name="mag_bias_z" value="0.00035"/> <!-- Riseholme --> <!-- 0.00035 or 0.0015 or 0.0008 changes daily -->
 
-    <param name="mag_bias_x" value="-2.0"/> <!-- Place UK -->
-    <param name="mag_bias_y" value="0"/> <!-- Place UK -->
-    <param name="mag_bias_z" value="0.0025"/> <!-- Place UK --> <!-- 0.00025 -->
+    <!-- Place UK -->
+    <!--<param name="mag_bias_x" value="-2.0"/>
+    <param name="mag_bias_y" value="0"/>
+    <param name="mag_bias_z" value="0.0025"/>-->
 
   </node>
 

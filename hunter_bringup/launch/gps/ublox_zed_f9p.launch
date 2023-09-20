@@ -25,7 +25,7 @@
   </node>
 
   <!--<node pkg="tf2_ros" type="static_transform_publisher" name="gps_tf_publisher" args="0.45 0.18 0.47 0 0 0 base_link gps_link" />--> <!-- x y z yaw pitch roll parent_frame child_frame -->
-  <node pkg="tf2_ros" type="static_transform_publisher" name="gps_tf_publisher" args="-0.45 0 0.35 0 0 0 base_link gps_link" /> <!-- x y z yaw pitch roll parent_frame child_frame -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="gps_tf_publisher" args="-0.45 -0.17 0.35 0 0 0 base_link gps_link" /> <!-- x y z yaw pitch roll parent_frame child_frame -->
 
   <group ns="gps">
   <!-- NavSat Processing -->
@@ -52,13 +52,13 @@
     <rosparam param="frequency">20</rosparam>
  
     <rosparam param="wait_for_datum">true</rosparam>
-    <!--<rosparam param="datum">[53.268642038, -0.524509505881, 0.0, map, base_link]</rosparam>--> <!-- datum for Riseholme -->
+    <rosparam param="datum">[53.268642038, -0.524509505881, 0.0, map, base_link]</rosparam> <!-- datum for Riseholme -->
     <!--<rosparam param="datum">[52.7497492, 1.4300629, -1.5708, map, base_link]</rosparam>--> <!-- datum for Place UK Greenhouse -->
     <!--<rosparam param="datum">[52.7496022, 1.4293044, 0.0, map, base_link]</rosparam>-->
         
     <!--<rosparam param="datum">[52.7496028, 1.4294042, -1.5708, map, base_link]</rosparam>-->
     
-    <rosparam param="datum">[52.7495940, 1.42957300, -1.300, map, base_link]</rosparam> <!-- when using RTK base -->
+    <!--<rosparam param="datum">[52.7495940, 1.42957300, -1.300, map, base_link]</rosparam>--> <!-- when using RTK base -->
     <!--<rosparam param="datum">[52.7496540, 1.42941100, -1.300, map, base_link]</rosparam>--> <!-- when using without RTK base -->
     <!-- lat up/down == larger/smaller number // long left/right == smaller/larger number // rotation move robot clockwise larger negative number -->
 
