@@ -30,7 +30,6 @@ class DualGNSSHeading:
 
         # https://stackoverflow.com/questions/45676694/calculate-heading-with-two-gps-devices
         if self.lat1 != 0.0 and self.long1 != 0.0 and self.lat2 != 0.0 and self.long2 != 0.0:
-            print("Error dual_gps_to_heading Lat Long is 0.0")
             d_long = self.long2 - self.long1
             y = math.sin(math.radians(d_long)) * math.cos(math.radians(self.lat2))
             x = math.cos(math.radians(self.lat1)) * math.sin(math.radians(self.lat2)) - math.sin(math.radians(self.lat1)) * math.cos(math.radians(self.lat2)) * math.cos(math.radians(d_long))
@@ -48,6 +47,8 @@ class DualGNSSHeading:
 
             # Publish the heading as a Pose
             self.publisher.publish(heading_pose)
+        else:            
+            print("Error dual_gps_to_heading Lat Long is 0.0")
 
 #=========================================
 if __name__ == '__main__':
