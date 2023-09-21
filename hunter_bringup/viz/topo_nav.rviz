@@ -6,15 +6,8 @@ Panels:
       Expanded:
         - /maps1
         - /Planner1
-        - /Planner1/Path2
-        - /Axes1
-        - /Row1
         - /Row1/MarkerArray1
         - /Row1/Marker1
-        - /Odometry1
-        - /Marker1
-        - /Image Front1
-        - /Image Rear1
       Splitter Ratio: 0.5
     Tree Height: 301
   - Class: rviz/Selection
@@ -390,6 +383,14 @@ Visualization Manager:
       Transport Hint: raw
       Unreliable: false
       Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /heading_marker
+      Name: Marker
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -427,10 +428,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 30.138919830322266
+      Scale: 75.30404663085938
       Target Frame: map
-      X: -35.235206604003906
-      Y: -33.93886184692383
+      X: 24.806257247924805
+      Y: -0.173773393034935
     Saved: ~
 Window Geometry:
   Displays:
