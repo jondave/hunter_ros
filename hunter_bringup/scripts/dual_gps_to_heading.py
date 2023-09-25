@@ -3,6 +3,7 @@
 import rospy
 from sensor_msgs.msg import NavSatFix
 from geometry_msgs.msg import Pose, Point, Quaternion
+from nav_msgs.msg import Odometry
 from visualization_msgs.msg import Marker
 import math
 
@@ -12,16 +13,22 @@ class DualGNSSHeading:
 
         print("dual_gps_to_heading init")
 
-        self.Subscriber_Gps_front_left = rospy.Subscriber("gps_front/fix", NavSatFix, self.callback_gps_front_left)
-        self.Subscriber_Gps_rear_right = rospy.Subscriber("gps/fix", NavSatFix, self.callback_gps_rear_right)
+        self.Subscriber_Gps_front_left = rospy.Subscriber("gps/fix", NavSatFix, self.callback_gps_front_left)
+        self.Subscriber_Gps_rear_right = rospy.Subscriber("gps_front/fix", NavSatFix, self.callback_gps_rear_right)
+        self.Subscriber_Odom = rospy.Subscriber("/odometry/filtered/global", Odometry, self.odometry_callback)
         self.pose_publisher = rospy.Publisher("robot_pose", Pose, queue_size=10)
         self.heading_marker_pub = rospy.Publisher("/heading_marker", Marker, queue_size=10) # vivisualise the heading as a marker in rviz
 
-
+        self.x = 0.0
+        self.y = 0.0
         self.lat_front_left = 0.0
         self.long_front_left = 0.0
         self.lat_rear_right = 0.0
         self.long_rear_right = 0.0
+
+    def odometry_callback(self, data):
+        self.x = data.pose.pose.position.x
+        self.y = data.pose.pose.position.y
         
     def callback_gps_front_left(self, data):
         self.lat_front_left = data.latitude
@@ -36,11 +43,11 @@ class DualGNSSHeading:
             d_long = self.long_rear_right - self.long_front_left
             y = math.sin(math.radians(d_long)) * math.cos(math.radians(self.lat_rear_right))
             x = math.cos(math.radians(self.lat_front_left)) * math.sin(math.radians(self.lat_rear_right)) - math.sin(math.radians(self.lat_front_left)) * math.cos(math.radians(self.lat_rear_right)) * math.cos(math.radians(d_long))
-            heading = math.degrees(math.atan2(y, x))
+            heading = math.degrees(math.atan2(x, y)) # + 1.232
 
             # Create a Pose message to represent the heading
             heading_pose = Pose()
-            heading_pose.position = Point(0.0, 0.0, 0.0)  # Set the position to (0, 0, 0)
+            heading_pose.position = Point(self.x, self.y, 0.0)  # Set the position to (0, 0, 0)
             heading_quaternion = Quaternion()
             heading_quaternion.x = 0.0
             heading_quaternion.y = 0.0
@@ -53,7 +60,7 @@ class DualGNSSHeading:
 
             # Create a Marker message to represent the heading as an arrow in rviz
             heading_marker = Marker()
-            heading_marker.header.frame_id = "base_link"
+            heading_marker.header.frame_id = "map"
             heading_marker.header.stamp = rospy.Time.now()
             heading_marker.type = Marker.ARROW
             heading_marker.action = Marker.ADD

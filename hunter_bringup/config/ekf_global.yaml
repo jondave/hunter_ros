@@ -32,7 +32,7 @@ odom1_config: [true,  true,  false,   # x_pos,    y_pos,     z_pos
                false, false, false,   # x_vel,    y_vel,     z_vel
                false, false, false,   # roll_vel, pitch_vel, yaw_vel
                false, false, false]   # x_accel,  y_accel,   z_accel
-odom1_differential: false # true # false
+odom1_differential: false
 #odom1_relative: true # new
 odom1_queue_size: 10
 
@@ -110,7 +110,7 @@ odom1_queue_size: 10
 # zed cameras pose
 
 # pose/heading from the two gps recievers
-pose0: /robot_pose
+pose0: /heading_pose
 pose0_config: [false, false, false,   # x_pos (true),    y_pos (true),     z_pos
                false, false, true,    # roll,     pitch,     yaw
                false, false, false,   # x_vel,    y_vel,     z_vel

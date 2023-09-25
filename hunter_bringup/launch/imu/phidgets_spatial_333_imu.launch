@@ -108,6 +108,6 @@
 
   </node>
 
-  <node pkg="tf2_ros" type="static_transform_publisher" name="imu_tf_publisher" args="0 0 0 0 0 0 base_link imu_link" /> <!-- x y z yaw pitch roll parent_frame child_frame -->
-
+  <!-- x y z yaw pitch roll parent_frame child_frame -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="imu_tf_publisher" args="0 0 0 0 0 0 base_link imu_link" />
 </launch>

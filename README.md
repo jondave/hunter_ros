@@ -3,6 +3,17 @@
 ## My Notes
 To start USB to CAN adapter run ```sudo ip link set can0 up type can bitrate 500000```.
 
+Start CANbus network add this to bashrc file:
+```
+tm is a function
+tm ()
+{
+    sudo ip link set can0 up type can bitrate 500000;
+    tmule -c $HOME/catkin_ws/src/hunter_ros/hunter_bringup/tmule/coordinator_riseholme.yaml $1
+}
+```
+Use tmule to launch CANbus and ROS tmule file ```tm launch```.
+
 ## Packages
 
 * hunter_base: a ROS wrapper around Hunter SDK to monitor and control the robot

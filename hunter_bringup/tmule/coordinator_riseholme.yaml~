@@ -71,11 +71,11 @@ init_cmd: |
 
   # Coordinator Riseholme
   export_default ROBOT_NAME "hunter2_002"
-  export_default MQTT_BROKER_IP "10.2.0.1"
+  export_default MQTT_BROKER_IP "10.8.0.99"
   export_default MQTT_BROKER_PORT 8883
   export_default MQTT_ENCODING "msgpack"
   export_default AGENT_SETUP_CONFIG "$(rospack find gofar_navigation)/config/server_representation.yaml"
-  export ROS_MASTER_URI="http://10.2.0.8:11311/" # coordinator local vpn server ip
+  export ROS_MASTER_URI="http://10.8.0.53:11311/" # coordinator local vpn server ip
 
 windows:
 
