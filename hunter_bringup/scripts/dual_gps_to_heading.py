@@ -7,6 +7,8 @@ from nav_msgs.msg import Odometry
 from visualization_msgs.msg import Marker
 import math
 
+# TODO if position_covariance / accuracy is > X eg 3m dont publish gps heading
+
 class DualGNSSHeading:
     
     def __init__(self):

@@ -21,7 +21,8 @@
     <rosparam file="$(find gofar_navigation)/config/move_base/costmap_common.yaml" command="load" ns="local_costmap" />
 
     <!-- local costmap, needs size -->
-    <rosparam file="$(find gofar_navigation)/config/move_base/costmap_local.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find gofar_navigation)/config/move_base/costmap_local_static.yaml" command="load" ns="local_costmap" />
+    <!--<rosparam file="$(find gofar_navigation)/config/move_base/costmap_global_static.yaml" command="load" ns="local_costmap" />-->
     <param name="local_costmap/width" value="10.0"/>
     <param name="local_costmap/height" value="10.0"/>
 
