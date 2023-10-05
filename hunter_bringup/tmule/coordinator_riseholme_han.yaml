@@ -16,7 +16,31 @@ init_cmd: |
   #############################################################################################
   # HUMAN-AWARE NAVIGATION PARAMETERS
   export_default CATKIN_WORKSPACE "$HOME/catkin_ws"
-  export_default USE_HAN false # if "false", human aware navigation is not activated
+  export_default CONFIG_DIRECT "$(rospack find gofar_safety)/config/" #directory of han config file
+  export_default OPENPOSE_DIRECT "$CATKIN_WORKSPACE/src/openpose/" #directory of openpose
+  export_default BAYESIAN_TRACKER_CONFIG "$CONFIG_DIRECT/human_sensing/bayesian_tracking.yaml" # config file for the bayesian human tracker
+  
+  export_default TWIST_MUX_LOCKS "$CONFIG_DIRECT/twist_mux/twist_mux_locks.yaml" #twist_mux config file
+  export_default TWIST_MUX_TOPICS "$CONFIG_DIRECT/twist_mux/twist_mux_topics.yaml" #twist_mux config file
+  export_default TELEOP_CONFIG "$CONFIG_DIRECT/teleoperation/teleop_logitech.yaml" #teleoperation config file
+  export_default CMD_VEL_AUTO_TOPIC "cmd_vel/auto" # name of topic being published by the main autonomous navigation system
+  export_default CMD_VEL_TELEOP_TOPIC "cmd_vel/joystick" #name of topic being published by the joystick commands 
+  export_default CMD_VEL_HAN_TOPIC "/han/cmd_vel" #name of topic being published by the HAN system
+  export_default CMD_VEL_TWIST_MUX_TOPIC "cmd_vel" #ackermann_steering_controller/cmd_vel (SIMULATED HUNTER) cmd_vel/managed (REAL/SIMULATED ROVER) cmd_vel (REAL HUNTER)
+  
+  export_default N_CAMERAS 2 # it can be "1" or "2"
+  export_default USE_VISUAL_ALERTS true # if "true", colored beacon is activated
+  export_default USE_AUDIO_ALERTS true # if "true", voice messages are activated
+  export_default USE_OBSTACLE_DETECT true # if "true", obstacle detector is activated
+  export_default CAMERA_FRONT_TOPIC_RGB "/realsense/color/image_raw" #"/camera1/color/image_raw" # name of the rgb image topic to be subscribed 
+  export_default CAMERA_FRONT_TOPIC_DEPTH "/realsense/aligned_depth_to_color/image_raw" #"/camera1/aligned_depth_to_color/image_raw" # name of the depth image topic to be subscribed
+  export_default CAMERA_BACK_TOPIC_RGB "/realsense_rear/color/image_raw" #"/camera1/color/image_raw" #"/camera2/color/image_raw" # name of the rgb image topic to be subscribed 
+  export_default CAMERA_BACK_TOPIC_DEPTH "/realsense_rear/aligned_depth_to_color/image_raw" #/camera2/aligned_depth_to_color/image_raw" # name of the depth image topic to be subscribed
+  export_default RS_SERIAL_N2 "146222253484" #serial number realsense camera back
+  export_default RS_SERIAL_N1 "141722061162" #serial number realsense camera front
+  export_default ARDUINO_PORT "/dev/ttyACM0" #name of the port where arduino is connected 
+  export_default ROBOT_TYPE "carlike" # kinematics of the robot, options are "carlike", "unicycle"
+  
   ##############################################################################################
   # ROBOTIC PLATFORM
   export_default USE_SIM false      # true if uses Gazebo model
@@ -47,7 +71,6 @@ init_cmd: |
   
 
   # Navigation
-  export_default USE_CARROT false
   export_default RECONF_EDGES true
   export_default USE_RESTRICTIONS true
   # NOT WORKING WITH TRUE, IT REQUIRES A TOPIC RELATED TO ROBOT TYPE
@@ -93,7 +116,15 @@ windows:
 
 - name: robot
   panes:
-  - roslaunch hunter_bringup hunter_robot_base.launch
+  - roslaunch hunter_bringup hunter_robot_base.launch #TODO USE THIS include_twistmux:=False
+  
+- name: twist_mux
+  panes:
+  - sleep 5 ; rosnode kill /twist_mux ; roslaunch gofar_safety han_twist_mux.launch cmd_vel_out:=$CMD_VEL_TWIST_MUX_TOPIC config_locks:=$TWIST_MUX_LOCKS config_topics:=$TWIST_MUX_TOPICS # to kill any existant twist_mux node and run the one which listen to the han/cmd topic
+
+- name: teleop_joy
+  panes:
+  - roslaunch gofar_safety han_joy_teleop.launch  teleop_topic:=$CMD_VEL_TELEOP_TOPIC teleop_config_file:=$TELEOP_CONFIG
 
 - name: localization
   panes:
@@ -124,24 +155,33 @@ windows:
 
 - name: topo_nav
   panes:
-  - roslaunch hunter_bringup topological_navigation_robot.launch move_base_planner:=move_base/TebLocalPlannerROS reconfigure_edges:=$RECONF_EDGES use_restrictions:=$USE_RESTRICTIONS use_han:=$USE_HAN
+  - roslaunch hunter_bringup topological_navigation_robot.launch move_base_planner:=move_base/TebLocalPlannerROS reconfigure_edges:=$RECONF_EDGES use_restrictions:=$USE_RESTRICTIONS 
   check: "rosservice list | grep -q topological_navigation"
   tags: [nav, site]
 
-#METRIC Navigation
 - name: move_base_actions
   panes:
-  - roslaunch hunter_bringup move_base_teb.launch cmd_vel_name:="/move_base/cmd_vel"
+  - roslaunch hunter_bringup move_base_teb.launch cmd_vel_name:=$CMD_VEL_AUTO_TOPIC
   
-#- name: in_row_actions
-#  panes:
-#  - roslaunch gofar_navigation in_row_navigation.launch bearnav2_front_map:=$BEARNAV2_FRONT_MAP_SIM bearnav2_rear_map:=$BEARNAV2_REAR_MAP_SIM cmd_vel_name:="/ackermann_steering_controller/cmd_vel" odom_name:="/odometry/filtered" image_front_name:="/realsense/color/image_raw" image_rear_name:="/realsense_rear/color/image_raw"; else roslaunch gofar_navigation in_row_navigation.launch bearnav2_front_map:=$BEARNAV2_FRONT_MAP bearnav2_rear_map:=$BEARNAV2_REAR_MAP cmd_vel_name:="/cmd_vel" odom_name:="/odometry/filtered" image_front_name:="/realsense/color/image_raw" image_rear_name:="/realsense_rear/color/image_raw"
-
-- name: e_scale
+- name: human_sensing
   panes:
-  - rosrun gofar_safety han_arduino_communication.py
+  - sleep 2 ; roslaunch gofar_safety han_human_detector_rgbd.launch config_direct:=$CONFIG_DIRECT n_cameras:=$N_CAMERAS openpose_direct:=$OPENPOSE_DIRECT camera_front_topic_rgb:=$CAMERA_FRONT_TOPIC_RGB camera_front_topic_depth:=$CAMERA_FRONT_TOPIC_DEPTH camera_back_topic_rgb:=$CAMERA_BACK_TOPIC_RGB camera_back_topic_depth:=$CAMERA_BACK_TOPIC_DEPTH 
+  - sleep 2 ; roslaunch gofar_safety han_human_tracker.launch param_file:=$BAYESIAN_TRACKER_CONFIG 
+- name: obstacle_detection
+  panes:
+  - sleep 2 ; if $USE_OBSTACLE_DETECT ; then roslaunch gofar_safety han_obstacle_detection.launch cmd_vel_auto_topic:=$CMD_VEL_AUTO_TOPIC cmd_vel_teleop_topic:=$CMD_VEL_TELEOP_TOPIC; fi
 
-# VISUALISATION
+- name: safety_system
+  panes:
+  - roslaunch gofar_safety han_decision_making.launch config_direct:=$CONFIG_DIRECT cmd_vel_auto_topic:=$CMD_VEL_AUTO_TOPIC cmd_vel_teleop_topic:=$CMD_VEL_TELEOP_TOPIC cmd_vel_han_topic:=$CMD_VEL_HAN_TOPIC
+  - roslaunch gofar_safety han_velocity_control.launch config_direct:=$CONFIG_DIRECT robot_type:=$ROBOT_TYPE cmd_vel_auto_topic:=$CMD_VEL_AUTO_TOPIC cmd_vel_teleop_topic:=$CMD_VEL_TELEOP_TOPIC cmd_vel_han_topic:=$CMD_VEL_HAN_TOPIC
+- name: audiovisual_alerts
+  panes:
+  - sleep 2 ; roslaunch gofar_safety han_audio_visual_alerts.launch config_direct:=$CONFIG_DIRECT arduino_port:=$ARDUINO_PORT use_visual_alerts:=$USE_VISUAL_ALERTS use_audio_alerts:=$USE_AUDIO_ALERTS
+- name: visualization
+  panes:
+  - rosrun web_video_server web_video_server
+
 - name: rviz
   panes:
   - DISPLAY=:0 rviz -d $RVIZ_CONFIG

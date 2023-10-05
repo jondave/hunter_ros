@@ -137,6 +137,10 @@ windows:
 #  panes:
 #  - roslaunch gofar_navigation in_row_navigation.launch bearnav2_front_map:=$BEARNAV2_FRONT_MAP_SIM bearnav2_rear_map:=$BEARNAV2_REAR_MAP_SIM cmd_vel_name:="/ackermann_steering_controller/cmd_vel" odom_name:="/odometry/filtered" image_front_name:="/realsense/color/image_raw" image_rear_name:="/realsense_rear/color/image_raw"; else roslaunch gofar_navigation in_row_navigation.launch bearnav2_front_map:=$BEARNAV2_FRONT_MAP bearnav2_rear_map:=$BEARNAV2_REAR_MAP cmd_vel_name:="/cmd_vel" odom_name:="/odometry/filtered" image_front_name:="/realsense/color/image_raw" image_rear_name:="/realsense_rear/color/image_raw"
 
+#- name: e_scale
+#  panes:
+#  - rosrun gofar_safety han_arduino_communication.py
+
 # VISUALISATION
 - name: rviz
   panes:
