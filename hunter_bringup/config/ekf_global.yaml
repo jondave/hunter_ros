@@ -120,7 +120,7 @@ pose0_differential: true
 pose0_queue_size: 10
 
 # pose/heading from fiducial slam
-pose1: /heading_pose
+pose1: /fiducial_pose
 pose1_config: [false, false, false,   # x_pos,    y_pos,     z_pos
                false, false, true,    # roll,     pitch,     yaw
                false, false, false,   # x_vel,    y_vel,     z_vel
@@ -130,10 +130,10 @@ pose1_differential: true
 pose1_queue_size: 10
 
 imu0: /imu/data
-imu0_config: [false, false, false,   # x_pos,    y_pos,     z_pos
-              false, false, true,    # roll,     pitch,     yaw
-              false, false, false,   # x_vel,    y_vel,     z_vel
-              false, false, false,    # roll_vel, pitch_vel, yaw_vel
+imu0_config: [false, false, false,    # x_pos,    y_pos,     z_pos
+              false, false, true,     # roll,     pitch,     yaw
+              false, false, false,    # x_vel,    y_vel,     z_vel
+              false, false, true,    # roll_vel, pitch_vel, yaw_vel
               true,  true,  false]    # x_accel,  y_accel,   z_acce
 imu0_differential: true # false
 imu0_relative: true # false

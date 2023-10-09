@@ -45,7 +45,7 @@ class DualGNSSHeading:
             d_long = self.long_rear_right - self.long_front_left
             y = math.sin(math.radians(d_long)) * math.cos(math.radians(self.lat_rear_right))
             x = math.cos(math.radians(self.lat_front_left)) * math.sin(math.radians(self.lat_rear_right)) - math.sin(math.radians(self.lat_front_left)) * math.cos(math.radians(self.lat_rear_right)) * math.cos(math.radians(d_long))
-            heading = math.degrees(math.atan2(x, y)) # + 1.232
+            heading = math.degrees(math.atan2(x, y)) - 70.628 # 2 gps antenna angle offset
 
             # Create a Pose message to represent the heading
             heading_pose = Pose()
