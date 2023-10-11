@@ -116,7 +116,7 @@ pose0_config: [false, false, false,   # x_pos,    y_pos,     z_pos
                false, false, false,   # x_vel,    y_vel,     z_vel
                false, false, false,   # roll_vel, pitch_vel, yaw_vel
                false, false, false]   # x_accel,  y_accel,   z_accel
-pose0_differential: true
+pose0_differential: false
 pose0_queue_size: 10
 
 # pose/heading from fiducial slam

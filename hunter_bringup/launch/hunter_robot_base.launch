@@ -80,6 +80,9 @@
     <!-- launch fiducial slam -->
     <include file="$(find gofar_navigation)/launch/fiducial_slam/fiducial_slam.launch" />
     
+    <!-- launch fiducial slam with rear camera -->
+    <include file="$(find gofar_navigation)/launch/fiducial_slam/fiducial_slam_rear.launch" />
+    
     <!-- launch local ekf localisation base_link to odom -->
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
         <rosparam command="load" file="$(find hunter_bringup)/config/ekf_local.yaml" />

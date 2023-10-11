@@ -4,6 +4,7 @@ import rospy
 from sensor_msgs.msg import NavSatFix
 from geometry_msgs.msg import Pose, Point, Quaternion
 from nav_msgs.msg import Odometry
+from std_msgs.msg import Float32
 from visualization_msgs.msg import Marker
 import math
 
@@ -17,10 +18,15 @@ class DualGNSSHeading:
 
         self.Subscriber_Gps_front_left = rospy.Subscriber("gps/fix", NavSatFix, self.callback_gps_front_left)
         self.Subscriber_Gps_rear_right = rospy.Subscriber("gps_front/fix", NavSatFix, self.callback_gps_rear_right)
-        self.Subscriber_Odom = rospy.Subscriber("/odometry/filtered/global", Odometry, self.odometry_callback)
+        self.Subscriber_Odom = rospy.Subscriber("odometry/filtered/global", Odometry, self.odometry_callback)
+        #self.Subscriber_Gps_Odom = rospy.Subscriber("odometry/gps", Odometry, self.odometry_gps_callback)
+        #self.Subscriber_Gps_Front_Odom = rospy.Subscriber("odometry/gps_front", Odometry, self.odometry_gps_front_callback)
+
         self.pose_publisher = rospy.Publisher("robot_pose", Pose, queue_size=10)
         self.heading_publisher = rospy.Publisher("heading_pose", Pose, queue_size=10)
-        self.heading_marker_pub = rospy.Publisher("/heading_marker", Marker, queue_size=10) # vivisualise the heading as a marker in rviz
+        self.heading_marker_pub = rospy.Publisher("heading_marker", Marker, queue_size=10) # vivisualise the heading as a marker in rviz
+        
+        self.angle_publisher = rospy.Publisher("angle", Float32, queue_size=10)
 
         self.x = 0.0
         self.y = 0.0
@@ -29,6 +35,14 @@ class DualGNSSHeading:
         self.lat_rear_right = 0.0
         self.long_rear_right = 0.0
 
+        # ros NESW convention
+        # north +green arrow, +90 deg
+        # east +red arrow 0 deg
+        # south -green arrow -90 deg
+        # west -red arrow +-180 deg
+        # counter clockwise to east 0 -> +180
+        # clockwise from east 0 -> -180
+
     def odometry_callback(self, data):
         self.x = data.pose.pose.position.x
         self.y = data.pose.pose.position.y
@@ -36,6 +50,18 @@ class DualGNSSHeading:
     def callback_gps_front_left(self, data):
         self.lat_front_left = data.latitude
         self.long_front_left = data.longitude
+        
+    def odometry_gps_callback(self, data):
+        self.odom_gps_x = data.pose.pose.position.x
+        self.odom_gps_y = data.pose.pose.position.y
+        
+    def odometry_gps_front_callback(self, data):
+        self.odom_gps_front_x = data.pose.pose.position.x
+        self.odom_gps_front_y = data.pose.pose.position.y
+
+        angle_radians = math.atan2(self.odom_gps_front_y - self.odom_gps_y, self.odom_gps_front_x - self.odom_gps_x)
+
+        self.angle_publisher.publish(math.degrees(angle_radians))
 
     def callback_gps_rear_right(self, data):
         self.lat_rear_right = data.latitude
@@ -46,12 +72,10 @@ class DualGNSSHeading:
             d_long = self.long_rear_right - self.long_front_left
             y = math.sin(math.radians(d_long)) * math.cos(math.radians(self.lat_rear_right))
             x = math.cos(math.radians(self.lat_front_left)) * math.sin(math.radians(self.lat_rear_right)) - math.sin(math.radians(self.lat_front_left)) * math.cos(math.radians(self.lat_rear_right)) * math.cos(math.radians(d_long))
-            #heading = math.degrees(math.atan2(x, y)) - 70.628 # 2 gps antenna angle offset
-            heading = math.atan2(x, y) - 1.5708 # - 1.2327 # 2 gps antenna angle offset
+            #heading = math.degrees(math.atan2(x, y)) - 19.372  70.628 # 2 gps antenna angle offset
+            heading = math.atan2(x, y) - 0.3381 # - 1.2327 # 2 gps antenna angle offset
 
-            rospy.logerr(x)
-            rospy.logerr(y)
-            rospy.logerr(math.degrees(heading))
+            self.angle_publisher.publish(math.degrees(heading))
 
             # Create a Pose message to represent the heading
             heading_pose = Pose()

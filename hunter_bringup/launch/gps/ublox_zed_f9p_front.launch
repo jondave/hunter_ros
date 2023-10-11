@@ -26,4 +26,68 @@
 
   <node pkg="tf2_ros" type="static_transform_publisher" name="gps_front_tf_publisher" args="0.45 0.17 0.35 0 0 0 base_link gps_front_link" /> <!-- x y z yaw pitch roll parent_frame child_frame -->
 
+  <group ns="gps_front">
+  <!-- NavSat Processing -->
+    <node pkg="nmea_navsat_driver" type="nmea_topic_driver" name="nmea_topic_driver">
+    </node>
+  </group>
+
+  <!-- converts gps cooridates to map cooridates and vice versa -->
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_front" >
+    <rosparam param="magnetic_declination_radians">-0.006806784</rosparam> <!-- 0.39° E  ± 0.40° == 0.006806784 - https://www.ngdc.noaa.gov/geomag/calculators/magcalc.shtml -->
+    <!-- Riseholme: -0.006806784 -->
+    <!-- Place UK Greenhouse: 1.13 ??? -->
+
+    <rosparam param="roll_offset">0</rosparam>
+    <rosparam param="pitch_offset">0</rosparam>
+    <rosparam param="yaw_offset">0</rosparam> <!-- 1.320708762053004 -->
+    <rosparam param="zero_altitude">true</rosparam>
+    <rosparam param="broadcast_utm_transform">false</rosparam>
+
+    <rosparam param="publish_filtered_gps">true</rosparam>
+
+    <rosparam param="use_odometry_yaw">false</rosparam>
+
+    <rosparam param="frequency">20</rosparam>
+ 
+    <rosparam param="wait_for_datum">true</rosparam>
+    <rosparam param="datum">[53.268642038, -0.524509505881, 0.0, map, base_link]</rosparam> <!-- datum for Riseholme -->
+    <!--<rosparam param="datum">[52.7497492, 1.4300629, -1.5708, map, base_link]</rosparam>--> <!-- datum for Place UK Greenhouse -->
+    <!--<rosparam param="datum">[52.7496022, 1.4293044, 0.0, map, base_link]</rosparam>-->
+        
+    <!--<rosparam param="datum">[52.7496028, 1.4294042, -1.5708, map, base_link]</rosparam>-->
+    
+    <!--<rosparam param="datum">[52.7495940, 1.42957300, -1.300, map, base_link]</rosparam>--> <!-- when using RTK base -->
+    <!--<rosparam param="datum">[52.7496540, 1.42941100, -1.300, map, base_link]</rosparam>--> <!-- when using without RTK base -->
+    <!-- lat up/down == larger/smaller number // long left/right == smaller/larger number // rotation move robot clockwise larger negative number -->
+
+    <!-- Place UK Greenhouse
+    x: -0.6697258949279785
+    y: 0.2699470520019531
+
+    latitude: 52.7497468
+    longitude: 1.430062
+    -->
+
+    <!-- Subscriptions -->
+    <remap from="imu/data" to="imu/data" />
+    <remap from="gps/fix" to="gps_front/fix" />
+    <remap from="odometry/filtered" to="odometry/filtered/global" />
+
+    <!-- Publlications -->
+    <remap from="/odometry/gps" to="odometry/gps_front" />
+
+   </node>  
+
+  <!--<node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" >
+    <rosparam>
+      magnetic_declination_radians: 0
+      roll_offset: 0
+      pitch_offset: 0
+      yaw_offset: 0
+      zero_altitude: false
+      broadcast_utm_transform: false
+    </rosparam>
+  </node>-->
+
 </launch>
