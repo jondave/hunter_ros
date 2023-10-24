@@ -29,7 +29,7 @@
     <!-- launch ouster lidar -->
     <!-- change ethernet ip to manual 192.168.2.1 and netmask 255.255.255.0 -->
     <!-- ip for current lidar 169.254.141.17 -->
-    <!--<include file="$(find hunter_bringup)/launch/ouster_lidar/ouster_sensor.launch">-->
+    <!--<include file="$(find hunter_bringup)/launch/ouster_lidar/ouster_sensor.launch" />-->
     <!--<include file="$(find ouster_ros)/launch/sensor.launch">
         <arg name="sensor_hostname" default="169.254.141.17" />
         <arg name="viz" default="false" />

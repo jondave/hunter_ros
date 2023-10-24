@@ -17,6 +17,7 @@ init_cmd: |
   # HUMAN-AWARE NAVIGATION PARAMETERS
   export_default CATKIN_WORKSPACE "$HOME/catkin_ws"
   export_default USE_HAN false # if "false", human aware navigation is not activated
+  export_default CONFIG_DIRECT "$(rospack find gofar_safety)/config/" #directory of han config file
   ##############################################################################################
   # ROBOTIC PLATFORM
   export_default USE_SIM false      # true if uses Gazebo model
@@ -133,16 +134,31 @@ windows:
   panes:
   - roslaunch hunter_bringup move_base_teb.launch cmd_vel_name:="/move_base/cmd_vel"
   
-#- name: in_row_actions
-#  panes:
-#  - roslaunch gofar_navigation in_row_navigation.launch bearnav2_front_map:=$BEARNAV2_FRONT_MAP_SIM bearnav2_rear_map:=$BEARNAV2_REAR_MAP_SIM cmd_vel_name:="/ackermann_steering_controller/cmd_vel" odom_name:="/odometry/filtered" image_front_name:="/realsense/color/image_raw" image_rear_name:="/realsense_rear/color/image_raw"; else roslaunch gofar_navigation in_row_navigation.launch bearnav2_front_map:=$BEARNAV2_FRONT_MAP bearnav2_rear_map:=$BEARNAV2_REAR_MAP cmd_vel_name:="/cmd_vel" odom_name:="/odometry/filtered" image_front_name:="/realsense/color/image_raw" image_rear_name:="/realsense_rear/color/image_raw"
+- name: in_row_actions
+  panes:
+  - roslaunch gofar_navigation in_row_navigation_hunter.launch # bearnav2_front_map:=$BEARNAV2_FRONT_MAP_SIM bearnav2_rear_map:=$BEARNAV2_REAR_MAP_SIM cmd_vel_name:="/ackermann_steering_controller/cmd_vel" odom_name:="/odometry/filtered" image_front_name:="/realsense/color/image_raw" image_rear_name:="/realsense_rear/color/image_raw"; else roslaunch gofar_navigation in_row_navigation.launch bearnav2_front_map:=$BEARNAV2_FRONT_MAP bearnav2_rear_map:=$BEARNAV2_REAR_MAP cmd_vel_name:="/cmd_vel" odom_name:="/odometry/filtered" image_front_name:="/realsense/color/image_raw" image_rear_name:="/realsense_rear/color/image_raw"
 
 - name: e_scale
   panes:
   - rosrun gofar_safety han_arduino_communication.py
+  - rosrun gofar_safety han_trays_monitoring.py 
 
 # VISUALISATION
 - name: rviz
   panes:
   - DISPLAY=:0 rviz -d $RVIZ_CONFIG
   tags: [nav, site]
+
+
+# EXPERIMENT DATA COLLECTION
+- name: rosbagging
+  panes:
+  - if [ "$ACTIVE_TEST_SET" == "1" ] ; then rosbag record --split --size=100 --output-name="rosbags/cofruit_test_set_1_experiments_`date +'%a-%d-%b---%H-%M'`.bag" /topological_map_2 /current_edge /robot_pose /current_route /topological_navigation/execute_policy_mode/goal /joy /hunter_status /auto_mode ; fi
+  - if [ "$ACTIVE_TEST_SET" == "4" ] ; then rosbag record --split --size=100 --output-name="rosbags/cofruit_test_set_4_experiments_`date +'%a-%d-%b---%H-%M'`.bag" /bob ; fi
+  - if [ "$ACTIVE_TEST_SET" == "5" ] ; then rosbag record --split --size=100 --output-name="rosbags/cofruit_test_set_5_experiments_`date +'%a-%d-%b---%H-%M'`.bag" /scan /robot_pose /odometry/filtered/global /topological_navigation/execute_policy_mode/goal /bearnav2/repeater/goal /bearnav2/repeat/output_align /bearnav2/repeat/output_dist /bearnav2_rear/repeater/goal /bearnav2_rear/repeat/output_align /bearnav2_rear/repeat/output_dist ; fi
+
+- name: experiment_logging
+  panes:
+  - rostopic pub /intervention/start std_msgs/Empty "{}" --once
+  - rostopic pub /intervention/end std_msgs/Empty "{}" --once
+  - 'rostopic pub /intervention/cause std_msgs/String "data: ENTER CAUSE HERE IF UNEXPECTED" --once'
