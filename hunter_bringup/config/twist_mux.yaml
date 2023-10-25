@@ -15,12 +15,12 @@ topics:
 - name    : bearnav2
   topic   : bearnav2/cmd_vel
   timeout : 0.5
-  priority: 2
+  priority: 3
 - name    : bearnav2_rear
   topic   : bearnav2_rear/cmd_vel
   timeout : 0.5
-  priority: 1
+  priority: 2
 - name    : move_base
   topic   : move_base/cmd_vel
   timeout : 0.5
-  priority: 3
+  priority: 5

@@ -156,9 +156,3 @@ windows:
   - if [ "$ACTIVE_TEST_SET" == "1" ] ; then rosbag record --split --size=100 --output-name="rosbags/cofruit_test_set_1_experiments_`date +'%a-%d-%b---%H-%M'`.bag" /topological_map_2 /current_edge /robot_pose /topological_navigation/execute_policy_mode/goal /joy /hunter_status /auto_mode ; fi
   - if [ "$ACTIVE_TEST_SET" == "4" ] ; then rosbag record --split --size=100 --output-name="rosbags/cofruit_test_set_4_experiments_`date +'%a-%d-%b---%H-%M'`.bag" /bob ; fi
   - if [ "$ACTIVE_TEST_SET" == "5" ] ; then rosbag record --split --size=100 --output-name="rosbags/cofruit_test_set_5_experiments_`date +'%a-%d-%b---%H-%M'`.bag" /scan /robot_pose /odometry/filtered/global /topological_navigation/execute_policy_mode/goal /bearnav2/repeater/goal /bearnav2/repeat/output_align /bearnav2/repeat/output_dist /bearnav2_rear/repeater/goal /bearnav2_rear/repeat/output_align /bearnav2_rear/repeat/output_dist ; fi
-
-- name: experiment_logging
-  panes:
-  - rostopic pub /intervention/start std_msgs/Empty "{}" --once
-  - rostopic pub /intervention/end std_msgs/Empty "{}" --once
-  - 'rostopic pub /intervention/cause std_msgs/String "data: ENTER CAUSE HERE IF UNEXPECTED" --once'
