@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="no_go_map_file" default="$(find gofar_navigation)/config/site_files/riseholme/polytunnel/nogo_map.yaml"/>
+
+    <!-- launch no-go map server, if use_no_go_map is true -->
+    <node name="no_go_map_server" pkg="map_server" type="map_server" args="$(arg no_go_map_file)">
+        <remap from="/map" to="/no_go_map"/>
+    </node>
+
+</launch>

@@ -16,6 +16,9 @@ static:
     map_topic: /map
     subscribe_to_updates: true
 
+no_go_layer:
+    map_topic: /no_go_map
+
 obstacles_laser:
     observation_sources: laser_front laser_rear
     laser_front: {data_type: LaserScan, clearing: true, marking: true, topic: realsense/scan, inf_is_valid: true, observation_persistence: 0.0}
