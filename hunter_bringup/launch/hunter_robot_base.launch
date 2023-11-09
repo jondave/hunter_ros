@@ -60,10 +60,10 @@
     <!--<node pkg="topic_tools" type="relay" name="relay_amcl_pose" args="/amcl_pose /robot_pose" />-->
 
     <!-- launch front realsense -->
-    <include file="$(find hunter_bringup)/launch/realsense/realsense.launch" />
+    <!--<include file="$(find hunter_bringup)/launch/realsense/realsense.launch" />-->
 
     <!-- launch rear realsense -->
-    <include file="$(find hunter_bringup)/launch/realsense/realsense_rear.launch" />
+    <!--<include file="$(find hunter_bringup)/launch/realsense/realsense_rear.launch" />-->
 
     <!-- combine both front and rear realsense rgb images into one image side by side -->
     <!--<include file="$(find hunter_bringup)/launch/realsense/realsense_combine_rgb_images.launch" />-->

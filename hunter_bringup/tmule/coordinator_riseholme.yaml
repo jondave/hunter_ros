@@ -92,9 +92,14 @@ windows:
   - roscore
   check: "rostopic list"
 
-- name: robot
+- name: robot_base
   panes:
   - roslaunch hunter_bringup hunter_robot_base.launch
+
+- name: cameras
+  panes:
+  - roslaunch hunter_bringup realsense.launch
+  - roslaunch hunter_bringup realsense_rear.launch
 
 - name: localization
   panes:
